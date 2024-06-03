@@ -51,9 +51,9 @@ class MaterialParameterController extends Controller
 
         ActivityLog::insert([
             "user_id" => Auth::id(),
-            "description" => "MaterialParameter for material '{$request->material}' were updated.",
+            "description" => "Material Parameter for material '{$request->material}' were updated.",
         ]);
 
-        return redirect()->back()->with('success', 'MaterialParameter has been updated');
+        return redirect()->back()->with('success', 'Material Parameter has been updated');
     }
 }

@@ -32,7 +32,7 @@
                                     {{ ucwords(str_replace('_', ' ', 'material')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <select id="material_id" name="material_id" required autofocus>
+                                    <select class="material_id" id="material_id" name="material_id" required autofocus>
                                         <option disabled selected>Select a material :</option>
                                         @foreach ($materials as $material)
                                             <option value="{{ $material->id }}">@php echo ucwords(str_replace('_', ' ', $material->name)); @endphp</option>
@@ -72,7 +72,7 @@
 @section('additional_script')
 <script>
     $(document).ready(function() {
-        $('#material_id').select2({
+        $('.material_id').select2({
             theme: 'bootstrap',
             width: '100%',
         });

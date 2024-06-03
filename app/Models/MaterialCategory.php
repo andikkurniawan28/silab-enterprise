@@ -18,21 +18,21 @@ class MaterialCategory extends Model
         static::created(function ($material_category) {
             ActivityLog::create([
                 'user_id' => Auth::id(),
-                'description' => "MaterialCategory '{$material_category->name}' was created.",
+                'description' => "Material Category '{$material_category->name}' was created.",
             ]);
         });
 
         static::updated(function ($material_category) {
             ActivityLog::create([
                 'user_id' => Auth::id(),
-                'description' => "MaterialCategory '{$material_category->name}' was updated.",
+                'description' => "Material Category '{$material_category->name}' was updated.",
             ]);
         });
 
         static::deleted(function ($material_category) {
             ActivityLog::create([
                 'user_id' => Auth::id(),
-                'description' => "MaterialCategory '{$material_category->name}' was deleted.",
+                'description' => "Material Category '{$material_category->name}' was deleted.",
             ]);
         });
     }

@@ -36,7 +36,7 @@ class MaterialCategoryController extends Controller
             "name" => "required|unique:material_categories",
         ]);
         MaterialCategory::create($validated);
-        return redirect()->back()->with("success", "MaterialCategory has been created");
+        return redirect()->back()->with("success", "Material Category has been created");
     }
 
     /**
@@ -67,7 +67,7 @@ class MaterialCategoryController extends Controller
             'name' => 'required|unique:material_categories,name,' . $material_category->id,
         ]);
         MaterialCategory::findOrFail($id)->update($validated);
-        return redirect()->back()->with("success", "MaterialCategory has been updated");
+        return redirect()->back()->with("success", "Material Category has been updated");
     }
 
     /**
@@ -76,6 +76,6 @@ class MaterialCategoryController extends Controller
     public function destroy($id)
     {
         MaterialCategory::findOrFail($id)->delete();
-        return redirect()->back()->with("success", "MaterialCategory has been deleted");
+        return redirect()->back()->with("success", "Material Category has been deleted");
     }
 }

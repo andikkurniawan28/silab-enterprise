@@ -36,7 +36,7 @@ class MeasurementUnitController extends Controller
             "name" => "required|unique:measurement_units",
         ]);
         MeasurementUnit::create($validated);
-        return redirect()->back()->with("success", "MeasurementUnit has been created");
+        return redirect()->back()->with("success", "Measurement Unit has been created");
     }
 
     /**
@@ -67,7 +67,7 @@ class MeasurementUnitController extends Controller
             'name' => 'required|unique:measurement_units,name,' . $measurement_unit->id,
         ]);
         MeasurementUnit::findOrFail($id)->update($validated);
-        return redirect()->back()->with("success", "MeasurementUnit has been updated");
+        return redirect()->back()->with("success", "Measurement Unit has been updated");
     }
 
     /**
@@ -76,6 +76,6 @@ class MeasurementUnitController extends Controller
     public function destroy($id)
     {
         MeasurementUnit::findOrFail($id)->delete();
-        return redirect()->back()->with("success", "MeasurementUnit has been deleted");
+        return redirect()->back()->with("success", "Measurement Unit has been deleted");
     }
 }

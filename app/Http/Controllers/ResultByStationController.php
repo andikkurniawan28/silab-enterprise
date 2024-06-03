@@ -20,7 +20,7 @@ class ResultByStationController extends Controller
         $station_selected = Station::with(['material.analysis' => function($query) {
             $from_datetime = session('from_datetime', now()->startOfDay()->format('Y-m-d 06:00:00'));
             $to_datetime = session('to_datetime', now()->endOfDay()->addDay()->format('Y-m-d 06:00:00'));
-            $query->whereBetween('created_at', [$from_datetime, $to_datetime]);
+            $query->whereBetween('created_at', [$from_datetime, $to_datetime])->orderBy('id', 'desc');
         }])->findOrFail($station_id);
         return view('result_by_station.index', compact('setup', 'stations', 'station_selected'));
     }

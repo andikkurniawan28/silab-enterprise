@@ -19,11 +19,23 @@
                 <input type="password" id="password" class="form-control" name="password"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                     aria-describedby="password" />
-                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                <span class="input-group-text cursor-pointer" id="showPassword"><i class="bx bx-hide"></i></span>
             </div>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
         </div>
     </form>
+
+    <script>
+        const showPassword = document.getElementById('showPassword');
+        const passwordInput = document.getElementById('password');
+
+        showPassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('bx-hide');
+            this.querySelector('i').classList.toggle('bx-show');
+        });
+    </script>
 @endsection

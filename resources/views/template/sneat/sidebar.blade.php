@@ -71,6 +71,129 @@
             </a>
         </li>
 
+        @if (in_array('role.index', $permissions) || in_array('permission.index', $permissions) || in_array('user.index', $permissions) || in_array('activity_log', $permissions))
+            <li class="menu-item
+                @yield('role-active')
+                @yield('permission-active')
+                @yield('user-active')
+                @yield('activity_log-active')
+            ">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'access')) }}</div>
+                </a>
+                <ul class="menu-sub">
+                    @if (in_array('role.index', $permissions))
+                        <li class="menu-item @yield('role-active')">
+                            <a href="{{ route('role.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'role')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('permission.index', $permissions))
+                        <li class="menu-item @yield('permission-active')">
+                            <a href="{{ route('permission.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'permission')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('user.index', $permissions))
+                        <li class="menu-item @yield('user-active')">
+                            <a href="{{ route('user.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'user')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('activity_log', $permissions))
+                        <li class="menu-item @yield('activity_log-active')">
+                            <a href="{{ route('activity_log') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'activity_log')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
+        @if (in_array('station.index', $permissions) || in_array('material_category.index', $permissions) || in_array('measurement_unit.index', $permissions) || in_array('parameter', $permissions) || in_array('material', $permissions) || in_array('material_parameter', $permissions))
+            <li class="menu-item
+                @yield('station-active')
+                @yield('material_category-active')
+                @yield('measurement_unit-active')
+                @yield('parameter-active')
+                @yield('material-active')
+                @yield('material_parameter-active')
+                @yield('analysis-active')
+            ">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'master')) }}</div>
+                </a>
+                <ul class="menu-sub">
+                    @if (in_array('station.index', $permissions))
+                        <li class="menu-item @yield('station-active')">
+                            <a href="{{ route('station.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'station')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('material_category.index', $permissions))
+                        <li class="menu-item @yield('material_category-active')">
+                            <a href="{{ route('material_category.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material_category')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('measurement_unit.index', $permissions))
+                        <li class="menu-item @yield('measurement_unit-active')">
+                            <a href="{{ route('measurement_unit.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'measurement_unit')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('parameter.index', $permissions))
+                        <li class="menu-item @yield('parameter-active')">
+                            <a href="{{ route('parameter.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'parameter')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('material.index', $permissions))
+                        <li class="menu-item @yield('material-active')">
+                            <a href="{{ route('material.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('material_parameter.index', $permissions))
+                        <li class="menu-item @yield('material_parameter-active')">
+                            <a href="{{ route('material_parameter.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material_parameter')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('analysis.index', $permissions))
+                        <li class="menu-item @yield('analysis-active')">
+                            <a href="{{ route('analysis.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'analysis')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
         @if (in_array('result_by_station.index', $permissions))
             <li class="menu-item @yield('result_by_station-active')">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -79,7 +202,7 @@
                 </a>
                 <ul class="menu-sub">
                     @foreach ($setup->stations as $station)
-                        <li class="menu-item">
+                        <li class="menu-item @yield("result_by_station_id_{$station->id}-active")">
                             <a href="{{ route('result_by_station.index', $station->id) }}" class="menu-link">
                                 <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', $station->name)) }}
                                 </div>
@@ -87,105 +210,6 @@
                         </li>
                     @endforeach
                 </ul>
-            </li>
-        @endif
-
-        @if (in_array('role.index', $permissions))
-            <li class="menu-item @yield('role-active')">
-                <a href="{{ route('role.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'role')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('permission.index', $permissions))
-            <li class="menu-item @yield('permission-active')">
-                <a href="{{ route('permission.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'permission')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('user.index', $permissions))
-            <li class="menu-item @yield('user-active')">
-                <a href="{{ route('user.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'user')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('activity_log', $permissions))
-            <li class="menu-item @yield('activity_log-active')">
-                <a href="{{ route('activity_log') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'activity_log')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('station.index', $permissions))
-            <li class="menu-item @yield('station-active')">
-                <a href="{{ route('station.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'station')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('material_category.index', $permissions))
-            <li class="menu-item @yield('material_category-active')">
-                <a href="{{ route('material_category.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'material_category')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('measurement_unit.index', $permissions))
-            <li class="menu-item @yield('measurement_unit-active')">
-                <a href="{{ route('measurement_unit.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'measurement_unit')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('parameter.index', $permissions))
-            <li class="menu-item @yield('parameter-active')">
-                <a href="{{ route('parameter.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'parameter')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('material.index', $permissions))
-            <li class="menu-item @yield('material-active')">
-                <a href="{{ route('material.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'material')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('material_parameter.index', $permissions))
-            <li class="menu-item @yield('material_parameter-active')">
-                <a href="{{ route('material_parameter.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'material_parameter')) }}</div>
-                </a>
-            </li>
-        @endif
-
-        @if (in_array('analysis.index', $permissions))
-            <li class="menu-item @yield('analysis-active')">
-                <a href="{{ route('analysis.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'analysis')) }}</div>
-                </a>
             </li>
         @endif
 

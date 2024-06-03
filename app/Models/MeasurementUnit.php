@@ -18,21 +18,21 @@ class MeasurementUnit extends Model
         static::created(function ($measurement_unit) {
             ActivityLog::create([
                 'user_id' => Auth::id(),
-                'description' => "MeasurementUnit '{$measurement_unit->name}' was created.",
+                'description' => "Measurement Unit '{$measurement_unit->name}' was created.",
             ]);
         });
 
         static::updated(function ($measurement_unit) {
             ActivityLog::create([
                 'user_id' => Auth::id(),
-                'description' => "MeasurementUnit '{$measurement_unit->name}' was updated.",
+                'description' => "Measurement Unit '{$measurement_unit->name}' was updated.",
             ]);
         });
 
         static::deleted(function ($measurement_unit) {
             ActivityLog::create([
                 'user_id' => Auth::id(),
-                'description' => "MeasurementUnit '{$measurement_unit->name}' was deleted.",
+                'description' => "Measurement Unit '{$measurement_unit->name}' was deleted.",
             ]);
         });
     }

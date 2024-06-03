@@ -1,10 +1,10 @@
 @extends('template.sneat.master')
 
 @section('title')
-    {{ strtoupper(str_replace('_', ' ', $material->name)) }}
+    {{ ucwords(str_replace('_', ' ', $material->name)) }}
 @endsection
 
-@section('result_by_material-active')
+@section('result_by_station-active')
     {{ 'active' }}
 @endsection
 

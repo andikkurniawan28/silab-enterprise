@@ -49,7 +49,7 @@ Route::get('/material_parameter/{material_id}/adjust', [MaterialParameterControl
 Route::put('/material_parameter/{material_id}', [MaterialParameterController::class, 'update'])->name('material_parameter.update')->middleware(['auth', 'check.permission']);
 Route::resource('/analysis', AnalysisController::class)->middleware(['auth', 'check.permission']);
 Route::get('/result_by_material/{material_id}', [ResultByMaterialController::class, 'index'])->name('result_by_material.index')->middleware(['auth', 'check.permission']);
-Route::get('/result_by_station/{station_id}', [ResultByStationController::class, 'index'])->name('result_by_station.index');
+Route::get('/result_by_station/{station_id}', [ResultByStationController::class, 'index'])->name('result_by_station.index')->middleware(['auth', 'check.permission']);
 Route::post('/result_by_station', [ResultByStationController::class, 'filter'])->name('result_by_station.filter');
 // Route::get('/results_by_station/getResults', [ResultByStationController::class, 'getResults'])->name('results_by_station.getResults');
 
