@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Setup extends Model
 {
@@ -14,6 +15,7 @@ class Setup extends Model
         $setup = self::get()->last();
         $setup->permission = Permission::where("role_id", Auth()->user()->role_id)->with('feature')->get();
         $setup->stations = Station::all();
+        $setup->material_categories = MaterialCategory::all();
         return $setup;
     }
 }

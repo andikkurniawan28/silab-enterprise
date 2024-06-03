@@ -100,6 +100,7 @@ class DatabaseSeeder extends Seeder
             ['name' => ucfirst(str_replace('_', ' ', 'delete_analysis')), 'route' => 'analysis.destroy'],
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_material')), 'route' => 'result_by_material.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_station')), 'route' => 'result_by_station.index'],
+            ['name' => ucfirst(str_replace('_', ' ', 'result_by_material_category')), 'route' => 'result_by_material_category.index'],
             // ['name' => ucfirst(str_replace('_', ' ', 'results_by_station_get_results')), 'route' => 'results_by_station.getResults'],
         ];
         Feature::insert($features);

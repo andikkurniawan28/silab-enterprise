@@ -16,6 +16,7 @@ use App\Http\Controllers\ResultByStationController;
 use App\Http\Controllers\MaterialCategoryController;
 use App\Http\Controllers\ResultByMaterialController;
 use App\Http\Controllers\MaterialParameterController;
+use App\Http\Controllers\ResultByMaterialCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::resource('/analysis', AnalysisController::class)->middleware(['auth', 'ch
 Route::get('/result_by_material/{material_id}', [ResultByMaterialController::class, 'index'])->name('result_by_material.index')->middleware(['auth', 'check.permission']);
 Route::get('/result_by_station/{station_id}', [ResultByStationController::class, 'index'])->name('result_by_station.index')->middleware(['auth', 'check.permission']);
 Route::post('/result_by_station', [ResultByStationController::class, 'filter'])->name('result_by_station.filter');
-// Route::get('/results_by_station/getResults', [ResultByStationController::class, 'getResults'])->name('results_by_station.getResults');
+Route::get('/result_by_material_category/{material_category_id}', [ResultByMaterialCategoryController::class, 'index'])->name('result_by_material_category.index')->middleware(['auth', 'check.permission']);
+Route::post('/result_by_material_category', [ResultByMaterialCategoryController::class, 'filter'])->name('result_by_material_category.filter');
 
 

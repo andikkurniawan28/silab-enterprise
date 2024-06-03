@@ -13,6 +13,11 @@ class MaterialCategory extends Model
 
     protected $guarded = [];
 
+    public function material()
+    {
+        return $this->hasMany(Material::class);
+    }
+
     protected static function booted()
     {
         static::created(function ($material_category) {
