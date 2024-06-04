@@ -1,7 +1,5 @@
 @extends('template.sneat.master')
 
-@section('title', 'Results by Station')
-
 @section('result_by_station-active')
     {{ 'active' }}
 @endsection
@@ -11,6 +9,11 @@
 @endsection
 
 @section('content')
+    @php
+        $permissions = collect($setup->permission)
+            ->pluck('feature.route')
+            ->toArray();
+    @endphp
     @csrf
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
@@ -41,8 +44,13 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="card mb-4 shadow">
                                 <div class="card-header">
-                                    <h5 class="card-title"><a href="{{ route('result_by_material.index', $material->id) }}"
-                                            target="_blank">{{ ucwords(str_replace('_', ' ', $material->name)) }}</a>
+                                    <h5 class="card-title">
+                                        @if (in_array('result_by_material.index', $permissions))
+                                            <a href="{{ route('result_by_material.index', $material->id) }}"
+                                                target="_blank">{{ ucwords(str_replace('_', ' ', $material->name)) }}</a>
+                                        @else
+                                            {{ ucwords(str_replace('_', ' ', $material->name)) }}
+                                        @endif
                                     </h5>
                                 </div>
                                 <div class="card-body">
@@ -60,7 +68,7 @@
                                             <tbody>
                                                 @foreach ($material->analysis as $analysis)
                                                     <tr>
-                                                        <td>{{ date("H:i", strtotime($analysis->created_at)) }}</td>
+                                                        <td>{{ date('H:i', strtotime($analysis->created_at)) }}</td>
                                                         @foreach ($material->material_parameter as $material_parameter)
                                                             <td>{{ !is_null($analysis->{$material_parameter->parameter->name}) ? number_format($analysis->{$material_parameter->parameter->name}, 2) : '' }}
                                                             </td>
