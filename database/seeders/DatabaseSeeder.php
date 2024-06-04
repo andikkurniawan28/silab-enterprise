@@ -43,6 +43,8 @@ class DatabaseSeeder extends Seeder
         User::insert($users);
 
         $features = [
+            ['name' => ucfirst(str_replace('_', ' ', 'setup')), 'route' => 'setup.index'],
+            ['name' => ucfirst(str_replace('_', ' ', 'update_setup')), 'route' => 'setup.update'],
             ['name' => ucfirst(str_replace('_', ' ', 'list_of_role')), 'route' => 'role.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'create_role')), 'route' => 'role.create'],
             ['name' => ucfirst(str_replace('_', ' ', 'save_role')), 'route' => 'role.store'],

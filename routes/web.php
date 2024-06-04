@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SetupController;
 use App\Http\Controllers\StationController;
 use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\MaterialController;
@@ -34,6 +35,8 @@ Route::post('/login', [AuthController::class, 'loginProcess'])->name('loginProce
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/change_datetime', [AuthController::class, 'changeDatetime'])->name('change_datetime');
 Route::get('/', DashboardController::class)->name('dashboard')->middleware(['auth']);
+Route::get('/setup', [SetupController::class, 'index'])->name('setup.index')->middleware(['auth', 'check.permission']);
+Route::put('/setup/{id}', [SetupController::class, 'update'])->name('setup.update')->middleware(['auth', 'check.permission']);
 Route::resource('/role', RoleController::class)->middleware(['auth', 'check.permission']);
 Route::get('/permission', [PermissionController::class, 'index'])->name('permission.index')->middleware(['auth', 'check.permission']);
 Route::get('/permission/{role_id}/adjust', [PermissionController::class, 'adjust'])->name('permission.adjust')->middleware(['auth', 'check.permission']);

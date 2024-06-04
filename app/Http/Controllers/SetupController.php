@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setup;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 
 class SetupController extends Controller
@@ -12,54 +13,15 @@ class SetupController extends Controller
      */
     public function index()
     {
-        //
+        $setup = Setup::init();
+        $setups = Setup::get()->last();
+        return view("setup.index", compact("setup", "setups"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Setup $setup)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Setup $setup)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Setup $setup)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Setup $setup)
-    {
-        //
+        Setup::whereId($id)->update($request->except(["_token", "_method"]));
+        ActivityLog::insert(["user_id" => Auth()->user()->id, "description" => "Setup was updated."]);
+        return redirect()->back()->with("success", "Setup has been updated");
     }
 }

@@ -71,6 +71,15 @@
             </a>
         </li>
 
+        @if (in_array('setup.index', $permissions))
+            <li class="menu-item @yield('setup-active')">
+                <a href="{{ route('setup.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'setup')) }}</div>
+                </a>
+            </li>
+        @endif
+
         @if (in_array('role.index', $permissions) || in_array('permission.index', $permissions) || in_array('user.index', $permissions) || in_array('activity_log', $permissions))
             <li class="menu-item
                 @yield('role-active')
