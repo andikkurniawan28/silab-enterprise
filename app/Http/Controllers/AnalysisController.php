@@ -35,8 +35,14 @@ class AnalysisController extends Controller
                     $parameter_values = '';
                     foreach ($parameters as $parameter) {
                         $parameter_name = str_replace(' ', '_', $parameter->name);
-                        if (!empty($row->$parameter_name)) {
-                            $parameter_values .= '<li>' . $parameter->name . '<sub>(' . $parameter->measurement_unit->name . ')</sub> = ' . number_format($row->$parameter_name,2) . '</li>';
+                        if($parameter->type == "Numeric")
+                        {
+                            if (!empty($row->$parameter_name)) {
+                                $parameter_values .= '<li>' . $parameter->name . '<sub>(' . $parameter->measurement_unit->name . ')</sub> = ' . number_format($row->$parameter_name,2) . '</li>';
+                            }
+                        }
+                        else if($parameter->type == "Option") {
+                            $parameter_values .= '<li>' . $parameter->name . '<sub>(' . $parameter->measurement_unit->name . ')</sub> = ' . $row->$parameter_name . '</li>';
                         }
                     }
                     return $parameter_values ? '<ul>' . $parameter_values . '</ul>' : '';
