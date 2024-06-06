@@ -134,7 +134,11 @@ class AnalysisController extends Controller
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);
-            $validation_rules[$parameter_name] = "nullable|numeric";
+            if($parameter->type == "Numeric"){
+                $validation_rules[$parameter_name] = "nullable|numeric";
+            } elseif($parameter->type == "Option") {
+                $validation_rules[$parameter_name] = "nullable";
+            }
         }
         $validated = $request->validate($validation_rules);
         $analysis->update($validated);

@@ -50,12 +50,26 @@
                                         {{ ucwords(str_replace('_', ' ', $parameter->name)) }}<sub>(@php echo $parameter->measurement_unit->name; @endphp)</sub>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="number" step="any" class="form-control"
-                                            id="{{ str_replace(' ', '_', $parameter->name) }}"
-                                            name="{{ str_replace(' ', '_', $parameter->name) }}"
-                                            value="{{ $analysis->{str_replace(' ', '_', $parameter->name)} }}"
-                                            min="{{ $parameter->min }}" max="{{ $parameter->max }}"
-                                        >
+                                        @if($parameter->type == "Numeric")
+                                            <input type="number" step="any" class="form-control"
+                                                id="{{ str_replace(' ', '_', $parameter->name) }}"
+                                                name="{{ str_replace(' ', '_', $parameter->name) }}"
+                                                value="{{ $analysis->{str_replace(' ', '_', $parameter->name)} }}"
+                                                min="{{ $parameter->min }}" max="{{ $parameter->max }}"
+                                            >
+                                        @elseif($parameter->type == "Option")
+                                            @foreach($parameter->parameter_option as $parameter_option)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="{{ str_replace(' ', '_', $parameter->name) }}"
+                                                        id="{{ str_replace(' ', '_', $parameter->name) }}"
+                                                        value="{{ $parameter_option->option->name }}"
+                                                        {{ ($analysis->{str_replace(' ', '_', $parameter->name)} == $parameter_option->option->name) ? 'checked' : '' }}
+                                                    >
+                                                    <label class="form-check-label" for="type_numeric">{{ $parameter_option->option->name }}</label>
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
