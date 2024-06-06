@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('material_parameters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('material_id')->constrained();
-            $table->foreignId('parameter_id')->constrained();
+            $table->foreignId('material_id')->constrained()->onDelete('cascade');
+            $table->foreignId('parameter_id')->constrained()->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

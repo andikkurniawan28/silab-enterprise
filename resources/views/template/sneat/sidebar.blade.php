@@ -81,13 +81,11 @@
         @endif
 
         @if (in_array('role.index', $permissions) ||
-                in_array('permission.index', $permissions) ||
                 in_array('user.index', $permissions) ||
                 in_array('activity_log', $permissions))
             <li
                 class="menu-item
                 @yield('role-active')
-                @yield('permission-active')
                 @yield('user-active')
                 @yield('activity_log-active')
             ">
@@ -100,14 +98,6 @@
                         <li class="menu-item @yield('role-active')">
                             <a href="{{ route('role.index') }}" class="menu-link">
                                 <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'role')) }}
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                    @if (in_array('permission.index', $permissions))
-                        <li class="menu-item @yield('permission-active')">
-                            <a href="{{ route('permission.index') }}" class="menu-link">
-                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'permission')) }}
                                 </div>
                             </a>
                         </li>
@@ -137,7 +127,6 @@
                 in_array('measurement_unit.index', $permissions) ||
                 in_array('option', $permissions) ||
                 in_array('parameter', $permissions) ||
-                // in_array('parameter_option', $permissions) ||
                 in_array('material', $permissions) ||
                 in_array('material_parameter', $permissions))
             <li
@@ -197,14 +186,6 @@
                             </a>
                         </li>
                     @endif
-                    {{-- @if (in_array('parameter_option.index', $permissions))
-                        <li class="menu-item @yield('parameter_option-active')">
-                            <a href="{{ route('parameter_option.index') }}" class="menu-link">
-                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'parameter_option')) }}
-                                </div>
-                            </a>
-                        </li>
-                    @endif --}}
                     @if (in_array('material.index', $permissions))
                         <li class="menu-item @yield('material-active')">
                             <a href="{{ route('material.index') }}" class="menu-link">

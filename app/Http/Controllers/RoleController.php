@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\Setup;
+use App\Models\Feature;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -24,7 +26,8 @@ class RoleController extends Controller
     public function create()
     {
         $setup = Setup::init();
-        return view('role.create', compact('setup'));
+        $features = Feature::all();
+        return view('role.create', compact('setup', 'features'));
     }
 
     /**
@@ -35,7 +38,22 @@ class RoleController extends Controller
         $validated = $request->validate([
             "name" => "required|unique:roles",
         ]);
-        Role::create($validated);
+
+        $role = Role::create($validated);
+
+        if ($request->has('feature_ids')) {
+            Permission::where("role_id", $role->id)->delete();
+            $features = $request->input('feature_ids');
+            foreach ($features as $featureId) {
+                if (Feature::where('id', $featureId)->exists()) {
+                    Permission::create([
+                        'feature_id' => $featureId,
+                        'role_id' => $role->id,
+                    ]);
+                }
+            }
+        }
+
         return redirect()->back()->with("success", "Role has been created");
     }
 
@@ -54,7 +72,9 @@ class RoleController extends Controller
     {
         $setup = Setup::init();
         $role = Role::findOrFail($id);
-        return view('role.edit', compact('setup', 'role'));
+        $features = Feature::all();
+        $permissions = Permission::where('role_id', $id)->get();
+        return view('role.edit', compact('setup', 'role', 'features', 'permissions'));
     }
 
     /**
@@ -63,10 +83,25 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $role = Role::findOrFail($id);
+
         $validated = $request->validate([
             'name' => 'required|unique:roles,name,' . $role->id,
         ]);
-        Role::findOrFail($id)->update($validated);
+
+        if ($request->has('feature_ids')) {
+            Permission::where("role_id", $id)->delete();
+            $features = $request->input('feature_ids');
+            foreach ($features as $featureId) {
+                if (Feature::where('id', $featureId)->exists()) {
+                    Permission::create([
+                        'feature_id' => $featureId,
+                        'role_id' => $id,
+                    ]);
+                }
+            }
+        }
+
+        $role->update($validated);
         return redirect()->back()->with("success", "Role has been updated");
     }
 

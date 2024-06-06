@@ -29,20 +29,29 @@
                         <tbody>
                             @foreach ($roles as $role)
                                 <tr>
-                                    <td>{{ $role->name }}</td>
+                                    <td>
+                                        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePermissions{{ $role->id }}" aria-expanded="false" aria-controls="collapsePermissions{{ $role->id }}">
+                                            <strong>{{ $role->name }}</strong>
+                                        </button>
+                                        <div class="collapse" id="collapsePermissions{{ $role->id }}">
+                                            <ul>
+                                                @foreach($role->permission as $permission)
+                                                    <li>{{ $permission->feature->name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="manage">
-                                            <a href="{{ route('role.edit', $role->id) }}"
-                                                class="btn btn-secondary btn-sm">Edit</a>
-                                            <button type="button" class="btn btn-danger btn-sm delete-btn"
-                                                data-id="{{ $role->id }}"
-                                                data-name="{{ $role->name }}">Delete</button>
+                                            <a href="{{ route('role.edit', $role->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                                            <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="{{ $role->id }}" data-name="{{ $role->name }}">Delete</button>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
