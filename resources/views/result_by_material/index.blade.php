@@ -4,9 +4,9 @@
     {{ ucwords(str_replace('_', ' ', $material->name)) }}
 @endsection
 
-@section('result_by_station-active')
+{{-- @section('result_by_station-active')
     {{ 'active' }}
-@endsection
+@endsection --}}
 
 @section('content')
     @csrf

@@ -49,7 +49,12 @@ class ResultByMaterialController extends Controller
                 // Menambahkan data material parameter sebagai kolom tersendiri
                 foreach ($material_parameters as $material_parameter) {
                     $parameter_name = str_replace(' ', '_', $material_parameter->parameter->name);
-                    $formatted_row[$parameter_name] = !empty($row->$parameter_name) ? number_format($row->$parameter_name, 2) : '';
+                    if($material_parameter->parameter->type == "Numeric"){
+                        $formatted_row[$parameter_name] = !empty($row->$parameter_name) ? number_format($row->$parameter_name, 2) : '';
+                    }
+                    elseif($material_parameter->parameter->type == "Option"){
+                        $formatted_row[$parameter_name] = $row->$parameter_name;
+                    }
                 }
 
                 $formatted_data[] = $formatted_row;

@@ -1,10 +1,10 @@
 @extends('template.sneat.master')
 
 @section('title')
-    {{ ucwords(str_replace('_', ' ', 'parameter')) }}
+    {{ ucwords(str_replace('_', ' ', 'option')) }}
 @endsection
 
-@section('parameter-active')
+@section('option-active')
     {{ 'active' }}
 @endsection
 
@@ -15,7 +15,7 @@
             <div class="card-body">
                 <h4>List of <strong>@yield('title')</strong></h4>
                 <div class="btn-group" role="group" aria-label="manage">
-                    <a href="{{ route('parameter.create') }}" class="btn btn-sm btn-primary">Create</a>
+                    <a href="{{ route('option.create') }}" class="btn btn-sm btn-primary">Create</a>
                 </div>
                 <div class="table-responsive">
                     <span class="half-line-break"></span>
@@ -23,33 +23,20 @@
                         <thead>
                             <tr>
                                 <th>{{ ucwords(str_replace('_', ' ', 'name')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'type')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'description')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'manage')) }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($parameters as $parameter)
+                            @foreach ($options as $option)
                                 <tr>
-                                    <td>{{ $parameter->name }}<sub>(@php echo $parameter->measurement_unit->name; @endphp)</sub></td>
-                                    <td>{{ $parameter->type }}</td>
-                                    <td>
-                                        @if($parameter->type == "Numeric")
-                                            <li>Min : {{ $parameter->min }}</li>
-                                            <li>Max : {{ $parameter->max }}</li>
-                                        @elseif($parameter->type == "Option")
-                                            @foreach($parameter->parameter_option as $parameter_option)
-                                            <li>Option : {{ $parameter_option->option->name }}</li>
-                                            @endforeach
-                                        @endif
-                                    </td>
+                                    <td>{{ $option->name }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="manage">
-                                            <a href="{{ route('parameter.edit', $parameter->id) }}"
+                                            <a href="{{ route('option.edit', $option->id) }}"
                                                 class="btn btn-secondary btn-sm">Edit</a>
                                             <button type="button" class="btn btn-danger btn-sm delete-btn"
-                                                data-id="{{ $parameter->id }}"
-                                                data-name="{{ $parameter->name }}">Delete</button>
+                                                data-id="{{ $option->id }}"
+                                                data-name="{{ $option->name }}">Delete</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -66,8 +53,8 @@
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function(event) {
                     event.preventDefault();
-                    const parameter_id = this.getAttribute('data-id');
-                    const parameter_name = this.getAttribute('data-name');
+                    const option_id = this.getAttribute('data-id');
+                    const option_name = this.getAttribute('data-name');
                     Swal.fire({
                         title: 'Are you sure?',
                         text: 'You won\'t be able to revert this!',
@@ -81,8 +68,8 @@
                             const form = document.createElement('form');
                             form.setAttribute('method', 'POST');
                             form.setAttribute('action',
-                                `{{ route('parameter.destroy', ':id') }}`.replace(
-                                    ':id', parameter_id));
+                                `{{ route('option.destroy', ':id') }}`.replace(
+                                    ':id', option_id));
                             const csrfToken = document.getElementsByName("_token")[0].value;
 
                             const hiddenMethod = document.createElement('input');
@@ -93,7 +80,7 @@
                             const name = document.createElement('input');
                             name.setAttribute('type', 'hidden');
                             name.setAttribute('name', 'name');
-                            name.setAttribute('value', parameter_name);
+                            name.setAttribute('value', option_name);
 
                             const csrfTokenInput = document.createElement('input');
                             csrfTokenInput.setAttribute('type', 'hidden');

@@ -1,10 +1,10 @@
 @extends('template.sneat.master')
 
 @section('title')
-    {{ ucwords(str_replace('_', ' ', 'adjust_material_parameter')) }}
+    {{ ucwords(str_replace('_', ' ', 'adjust_parameter_option')) }}
 @endsection
 
-@section('material_parameter-active')
+@section('parameter_option-active')
     {{ 'active' }}
 @endsection
 
@@ -14,7 +14,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('material_parameter.index') }}">{{ ucwords(str_replace('_', ' ', 'material_parameter')) }}</a></li>
+                        href="{{ route('parameter_option.index') }}">{{ ucwords(str_replace('_', ' ', 'parameter_option')) }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
             </ol>
         </nav>
@@ -25,20 +25,20 @@
                         <h5 class="mb-0">@yield('title')</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('material_parameter.update', $material->id) }}" method="POST">
+                        <form action="{{ route('parameter_option.update', $parameter->id) }}" method="POST">
                             @csrf @method('PUT')
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="material">
-                                    {{ ucwords(str_replace('_', ' ', 'material')) }}
+                                <label class="col-sm-2 col-form-label" for="parameter">
+                                    {{ ucwords(str_replace('_', ' ', 'parameter')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="material" name="material" value="{{ $material->name }}"
+                                    <input type="text" class="form-control" id="parameter" name="parameter" value="{{ $parameter->name }}"
                                         readonly>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label
-                                    class="col-sm-2 col-form-label">{{ ucwords(str_replace('_', ' ', 'parameters')) }}</label>
+                                    class="col-sm-2 col-form-label">{{ ucwords(str_replace('_', ' ', 'parameter_options')) }}</label>
                                 <div class="col-sm-10">
                                     <!-- Checkbox Select All -->
                                     <div class="form-check">
@@ -48,17 +48,17 @@
                                         </label>
                                     </div>
                                     <hr>
-                                    <!-- Checkbox for each parameter -->
-                                    @foreach ($parameters as $parameter)
+                                    <!-- Checkbox for each option -->
+                                    @foreach ($options as $option)
                                         @php
-                                            $isChecked = $material_parameters->contains('parameter_id', $parameter->id);
+                                            $isChecked = $parameter_options->contains('option_id', $option->id);
                                         @endphp
                                         <div class="form-check">
-                                            <input class="form-check-input parameter-checkbox" type="checkbox"
-                                                name="parameter_ids[]" value="{{ $parameter->id }}"
-                                                id="parameter_{{ $parameter->id }}" {{ $isChecked ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="parameter_{{ $parameter->id }}">
-                                                {{ $parameter->name }}<sub>(@php echo $parameter->measurement_unit->name; @endphp)</sub>
+                                            <input class="form-check-input option-checkbox" type="checkbox"
+                                                name="option_ids[]" value="{{ $option->id }}"
+                                                id="option_{{ $option->id }}" {{ $isChecked ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="option_{{ $option->id }}">
+                                                {{ $option->name }}
                                             </label>
                                         </div>
                                     @endforeach
@@ -79,7 +79,7 @@
     <!-- Script for Select All functionality -->
     <script>
         document.getElementById('select_all').addEventListener('change', function() {
-            let checkboxes = document.querySelectorAll('.parameter-checkbox');
+            let checkboxes = document.querySelectorAll('.option-checkbox');
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = this.checked;
             });

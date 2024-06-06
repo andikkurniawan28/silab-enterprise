@@ -74,21 +74,25 @@
         @if (in_array('setup.index', $permissions))
             <li class="menu-item @yield('setup-active')">
                 <a href="{{ route('setup.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <i class="menu-icon tf-icons bx bx-cog"></i>
                     <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'setup')) }}</div>
                 </a>
             </li>
         @endif
 
-        @if (in_array('role.index', $permissions) || in_array('permission.index', $permissions) || in_array('user.index', $permissions) || in_array('activity_log', $permissions))
-            <li class="menu-item
+        @if (in_array('role.index', $permissions) ||
+                in_array('permission.index', $permissions) ||
+                in_array('user.index', $permissions) ||
+                in_array('activity_log', $permissions))
+            <li
+                class="menu-item
                 @yield('role-active')
                 @yield('permission-active')
                 @yield('user-active')
                 @yield('activity_log-active')
             ">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <i class="menu-icon tf-icons bx bx-door-open"></i>
                     <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'access')) }}</div>
                 </a>
                 <ul class="menu-sub">
@@ -128,17 +132,27 @@
             </li>
         @endif
 
-        @if (in_array('station.index', $permissions) || in_array('material_category.index', $permissions) || in_array('measurement_unit.index', $permissions) || in_array('parameter', $permissions) || in_array('material', $permissions) || in_array('material_parameter', $permissions))
-            <li class="menu-item
+        @if (in_array('station.index', $permissions) ||
+                in_array('material_category.index', $permissions) ||
+                in_array('measurement_unit.index', $permissions) ||
+                in_array('option', $permissions) ||
+                in_array('parameter', $permissions) ||
+                // in_array('parameter_option', $permissions) ||
+                in_array('material', $permissions) ||
+                in_array('material_parameter', $permissions))
+            <li
+                class="menu-item
                 @yield('station-active')
                 @yield('material_category-active')
                 @yield('measurement_unit-active')
+                @yield('option-active')
                 @yield('parameter-active')
+                {{-- @yield('parameter_option-active') --}}
                 @yield('material-active')
                 @yield('material_parameter-active')
             ">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <i class="menu-icon tf-icons bx bx-data"></i>
                     <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'master')) }}</div>
                 </a>
                 <ul class="menu-sub">
@@ -153,7 +167,8 @@
                     @if (in_array('material_category.index', $permissions))
                         <li class="menu-item @yield('material_category-active')">
                             <a href="{{ route('material_category.index') }}" class="menu-link">
-                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material_category')) }}
+                                <div data-i18n="Without menu">
+                                    {{ ucwords(str_replace('_', ' ', 'material_category')) }}
                                 </div>
                             </a>
                         </li>
@@ -166,6 +181,14 @@
                             </a>
                         </li>
                     @endif
+                    @if (in_array('option.index', $permissions))
+                        <li class="menu-item @yield('option-active')">
+                            <a href="{{ route('option.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'option')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
                     @if (in_array('parameter.index', $permissions))
                         <li class="menu-item @yield('parameter-active')">
                             <a href="{{ route('parameter.index') }}" class="menu-link">
@@ -174,6 +197,14 @@
                             </a>
                         </li>
                     @endif
+                    {{-- @if (in_array('parameter_option.index', $permissions))
+                        <li class="menu-item @yield('parameter_option-active')">
+                            <a href="{{ route('parameter_option.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'parameter_option')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif --}}
                     @if (in_array('material.index', $permissions))
                         <li class="menu-item @yield('material-active')">
                             <a href="{{ route('material.index') }}" class="menu-link">
@@ -185,7 +216,8 @@
                     @if (in_array('material_parameter.index', $permissions))
                         <li class="menu-item @yield('material_parameter-active')">
                             <a href="{{ route('material_parameter.index') }}" class="menu-link">
-                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material_parameter')) }}
+                                <div data-i18n="Without menu">
+                                    {{ ucwords(str_replace('_', ' ', 'material_parameter')) }}
                                 </div>
                             </a>
                         </li>
@@ -197,7 +229,7 @@
         @if (in_array('analysis.index', $permissions))
             <li class="menu-item @yield('analysis-active')">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <i class="menu-icon tf-icons bx bx-transfer"></i>
                     <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'transaction')) }}</div>
                 </a>
                 <ul class="menu-sub">
@@ -216,7 +248,7 @@
         @if (in_array('result_by_station.index', $permissions))
             <li class="menu-item @yield('result_by_station-active')">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <i class="menu-icon tf-icons bx bx-station"></i>
                     <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'result_by_station')) }}</div>
                 </a>
                 <ul class="menu-sub">
@@ -235,14 +267,17 @@
         @if (in_array('result_by_material_category.index', $permissions))
             <li class="menu-item @yield('result_by_material_category-active')">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'result_by_material_category')) }}</div>
+                    <i class="menu-icon tf-icons bx bx-category"></i>
+                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'result_by_material_category')) }}
+                    </div>
                 </a>
                 <ul class="menu-sub">
                     @foreach ($setup->material_categories as $material_category)
                         <li class="menu-item @yield("result_by_material_category_id_{$material_category->id}-active")">
-                            <a href="{{ route('result_by_material_category.index', $material_category->id) }}" class="menu-link">
-                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', $material_category->name)) }}
+                            <a href="{{ route('result_by_material_category.index', $material_category->id) }}"
+                                class="menu-link">
+                                <div data-i18n="Without menu">
+                                    {{ ucwords(str_replace('_', ' ', $material_category->name)) }}
                                 </div>
                             </a>
                         </li>
@@ -250,6 +285,23 @@
                 </ul>
             </li>
         @endif
+
+        <li class="menu-item @yield('report-active')">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-printer"></i>
+                <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'report')) }}</div>
+            </a>
+            <ul class="menu-sub">
+                {{-- @foreach ($setup->material_categories as $material_category)
+                        <li class="menu-item @yield("result_by_material_category_id_{$material_category->id}-active")">
+                            <a href="{{ route('result_by_material_category.index', $material_category->id) }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', $material_category->name)) }}
+                                </div>
+                            </a>
+                        </li>
+                @endforeach --}}
+            </ul>
+        </li>
 
     </ul>
 

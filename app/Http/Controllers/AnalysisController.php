@@ -19,11 +19,14 @@ class AnalysisController extends Controller
         $setup = Setup::init();
         $parameters = Parameter::all();
         if ($request->ajax()) {
-            $data = Analysis::with('material')->latest()->get();
+            $data = Analysis::with('material', 'user')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('material_id', function ($row) {
                     return $row->material ? '<a href="' . route('result_by_material.index', $row->material_id) . '" target="_blank">' . $row->material->name . '</a>' : 'N/A';
+                })
+                ->editColumn('user_id', function ($row) {
+                    return $row->user ? $row->user->name : 'N/A';
                 })
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->format('Y-m-d H:i:s');
@@ -47,7 +50,7 @@ class AnalysisController extends Controller
                     </div>
                 ';
                 })
-                ->rawColumns(['parameters', 'action', 'material_id'])
+                ->rawColumns(['parameters', 'action', 'material_id', 'user_id'])
                 ->setRowAttr([
                     'data-searchable' => 'true'
                 ])
@@ -72,13 +75,19 @@ class AnalysisController extends Controller
      */
     public function store(Request $request)
     {
+        $request->request->add(["user_id" => Auth()->user()->id]);
         $parameters = Parameter::all();
         $validation_rules = [
             "material_id" => "required",
+            "user_id" => "required",
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);
-            $validation_rules[$parameter_name] = "nullable|numeric";
+            if($parameter->type == "Numeric"){
+                $validation_rules[$parameter_name] = "nullable|numeric";
+            } elseif($parameter->type == "Option") {
+                $validation_rules[$parameter_name] = "nullable";
+            }
         }
         $validated = $request->validate($validation_rules);
         Analysis::create($validated);
@@ -110,10 +119,12 @@ class AnalysisController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->request->add(["user_id" => Auth()->user()->id]);
         $analysis = Analysis::findOrFail($id);
         $parameters = Parameter::all();
         $validation_rules = [
             "material_id" => "required",
+            "user_id" => "required",
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);

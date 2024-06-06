@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('analyses', function (Blueprint $table) {
+        Schema::create('parameter_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('material_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('parameter_id')->constrained()->onDelete('cascade');
+            $table->foreignId('option_id')->constrained()->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('analyses');
+        Schema::dropIfExists('parameter_options');
     }
 };

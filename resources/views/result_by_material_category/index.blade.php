@@ -70,7 +70,12 @@
                                                     <tr>
                                                         <td>{{ date("H:i", strtotime($analysis->created_at)) }}</td>
                                                         @foreach ($material->material_parameter as $material_parameter)
-                                                            <td>{{ !is_null($analysis->{$material_parameter->parameter->name}) ? number_format($analysis->{$material_parameter->parameter->name}, 2) : '' }}
+                                                            <td>
+                                                                @if($material_parameter->parameter->type == "Numeric")
+                                                                    {{ !is_null($analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))}) ? number_format($analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))}, 2) : '' }}
+                                                                @elseif($material_parameter->parameter->type == "Option")
+                                                                    {{ $analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))} }}
+                                                                @endif
                                                             </td>
                                                         @endforeach
                                                     </tr>

@@ -42,4 +42,9 @@ class Analysis extends Model
         return $this->belongsTo(Material::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

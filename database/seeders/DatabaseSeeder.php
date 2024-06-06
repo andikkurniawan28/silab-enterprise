@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Setup;
+use App\Models\Option;
 use App\Models\Feature;
 use App\Models\Station;
 use App\Models\Material;
@@ -79,12 +80,21 @@ class DatabaseSeeder extends Seeder
             ['name' => ucfirst(str_replace('_', ' ', 'edit_measurement_unit')), 'route' => 'measurement_unit.edit'],
             ['name' => ucfirst(str_replace('_', ' ', 'update_measurement_unit')), 'route' => 'measurement_unit.update'],
             ['name' => ucfirst(str_replace('_', ' ', 'delete_measurement_unit')), 'route' => 'measurement_unit.destroy'],
+            ['name' => ucfirst(str_replace('_', ' ', 'list_of_option')), 'route' => 'option.index'],
+            ['name' => ucfirst(str_replace('_', ' ', 'create_option')), 'route' => 'option.create'],
+            ['name' => ucfirst(str_replace('_', ' ', 'save_option')), 'route' => 'option.store'],
+            ['name' => ucfirst(str_replace('_', ' ', 'edit_option')), 'route' => 'option.edit'],
+            ['name' => ucfirst(str_replace('_', ' ', 'update_option')), 'route' => 'option.update'],
+            ['name' => ucfirst(str_replace('_', ' ', 'delete_option')), 'route' => 'option.destroy'],
             ['name' => ucfirst(str_replace('_', ' ', 'list_of_parameter')), 'route' => 'parameter.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'create_parameter')), 'route' => 'parameter.create'],
             ['name' => ucfirst(str_replace('_', ' ', 'save_parameter')), 'route' => 'parameter.store'],
             ['name' => ucfirst(str_replace('_', ' ', 'edit_parameter')), 'route' => 'parameter.edit'],
             ['name' => ucfirst(str_replace('_', ' ', 'update_parameter')), 'route' => 'parameter.update'],
             ['name' => ucfirst(str_replace('_', ' ', 'delete_parameter')), 'route' => 'parameter.destroy'],
+            // ['name' => ucfirst(str_replace('_', ' ', 'list_of_parameter_option')), 'route' => 'parameter_option.index'],
+            // ['name' => ucfirst(str_replace('_', ' ', 'adjust_parameter_option')), 'route' => 'parameter_option.adjust'],
+            // ['name' => ucfirst(str_replace('_', ' ', 'update_parameter_option')), 'route' => 'parameter_option.update'],
             ['name' => ucfirst(str_replace('_', ' ', 'list_of_material')), 'route' => 'material.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'create_material')), 'route' => 'material.create'],
             ['name' => ucfirst(str_replace('_', ' ', 'save_material')), 'route' => 'material.store'],
@@ -129,14 +139,21 @@ class DatabaseSeeder extends Seeder
 
         $measurement_units = [
             ["name" => "%"],
+            ["name" => "-"],
         ];
         MeasurementUnit::insert($measurement_units);
 
+        $options = [
+            ["name" => "High"],
+            ["name" => "Low"],
+        ];
+        Option::insert($options);
+
         $parameters = [
-            ["name" => "Brix", "measurement_unit_id" => 1, "min" => 0, "max" => 100],
-            ["name" => "Pol", "measurement_unit_id" => 1, "min" => 0, "max" => 100],
-            ["name" => "HK", "measurement_unit_id" => 1, "min" => 0, "max" => 100],
-            ["name" => "Rendemen", "measurement_unit_id" => 1, "min" => 0, "max" => 100],
+            ["name" => "Brix", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
+            ["name" => "Pol", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
+            ["name" => "HK", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
+            ["name" => "Rendemen", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
         ];
         Parameter::insert($parameters);
 

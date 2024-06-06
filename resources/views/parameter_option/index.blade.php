@@ -1,10 +1,10 @@
 @extends('template.sneat.master')
 
 @section('title')
-    {{ ucwords(str_replace('_', ' ', 'material_parameter')) }}
+    {{ ucwords(str_replace('_', ' ', 'parameter_option')) }}
 @endsection
 
-@section('material_parameter-active')
+@section('parameter_option-active')
     {{ 'active' }}
 @endsection
 
@@ -18,23 +18,23 @@
                     <table class="table table-hover table-bordered" id="example" width="100%">
                         <thead>
                             <tr>
-                                <th>{{ ucwords(str_replace('_', ' ', 'material')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'parameters')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'parameter')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'option')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'manage')) }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($materials as $material)
+                            @foreach ($parameters as $parameter)
                                 <tr>
-                                    <td>{{ $material->name }}</td>
+                                    <td>{{ $parameter->name }}</td>
                                     <td>
-                                        @foreach ($material->material_parameter as $material_parameter)
-                                            <li>{{ $material_parameter->parameter->name }}<sub>(@php echo $material_parameter->parameter->measurement_unit->name; @endphp)</sub></li>
+                                        @foreach ($parameter->parameter_option as $parameter_option)
+                                            <li>{{ $parameter_option->option->name }}</li>
                                         @endforeach
                                     </td>
                                     <td>
-                                        <div class="btn-group" role="group" aria-label="manage">
-                                            <a href="{{ route('material_parameter.adjust', $material->id) }}"
+                                        <div class="btn-group" parameter="group" aria-label="manage">
+                                            <a href="{{ route('parameter_option.adjust', $parameter->id) }}"
                                                 class="btn btn-secondary btn-sm">Adjust</a>
                                         </div>
                                     </td>

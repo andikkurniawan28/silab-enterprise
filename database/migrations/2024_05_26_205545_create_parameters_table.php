@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('measurement_unit_id')->constrained();
             $table->string('name')->unique();
-            $table->float('min');
-            $table->float('max');
+            $table->string('type');
+            $table->float('min')->nullable();
+            $table->float('max')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
