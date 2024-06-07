@@ -31,7 +31,18 @@
                         <tbody>
                             @foreach ($materials as $material)
                                 <tr>
-                                    <td>{{ $material->name }}</td>
+                                    <td>
+                                        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePermissions{{ $material->id }}" aria-expanded="false" aria-controls="collapsePermissions{{ $material->id }}">
+                                            <strong>{{ $material->name }}</strong>
+                                        </button>
+                                        <div class="collapse" id="collapsePermissions{{ $material->id }}">
+                                            <ul>
+                                                @foreach($material->material_parameter as $material_parameter)
+                                                    <li>{{ $material_parameter->parameter->name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td>{{ $material->station->name }}</td>
                                     <td>{{ $material->material_category->name }}</td>
                                     <td>

@@ -16,7 +16,6 @@ use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ResultByStationController;
 use App\Http\Controllers\MaterialCategoryController;
 use App\Http\Controllers\ResultByMaterialController;
-use App\Http\Controllers\MaterialParameterController;
 use App\Http\Controllers\ResultByMaterialCategoryController;
 
 /*
@@ -46,9 +45,6 @@ Route::resource('/measurement_unit', MeasurementUnitController::class)->middlewa
 Route::resource('/option', OptionController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/parameter', ParameterController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/material', MaterialController::class)->middleware(['auth', 'check.permission']);
-Route::get('/material_parameter', [MaterialParameterController::class, 'index'])->name('material_parameter.index')->middleware(['auth', 'check.permission']);
-Route::get('/material_parameter/{material_id}/adjust', [MaterialParameterController::class, 'adjust'])->name('material_parameter.adjust')->middleware(['auth', 'check.permission']);
-Route::put('/material_parameter/{material_id}', [MaterialParameterController::class, 'update'])->name('material_parameter.update')->middleware(['auth', 'check.permission']);
 Route::resource('/analysis', AnalysisController::class)->middleware(['auth', 'check.permission']);
 Route::get('/result_by_material/{material_id}', [ResultByMaterialController::class, 'index'])->name('result_by_material.index')->middleware(['auth', 'check.permission']);
 Route::get('/result_by_station/{station_id}', [ResultByStationController::class, 'index'])->name('result_by_station.index')->middleware(['auth', 'check.permission']);

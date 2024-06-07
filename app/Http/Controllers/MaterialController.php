@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setup;
-use App\Models\Material;
-use App\Models\MaterialCategory;
-use Illuminate\Http\Request;
 use App\Models\Station;
+use App\Models\Material;
+use App\Models\Parameter;
+use Illuminate\Http\Request;
+use App\Models\MaterialCategory;
+use App\Models\MaterialParameter;
 
 class MaterialController extends Controller
 {
@@ -28,7 +30,8 @@ class MaterialController extends Controller
         $setup = Setup::init();
         $stations = Station::all();
         $material_categories = MaterialCategory::all();
-        return view('material.create', compact('setup', 'stations', 'material_categories'));
+        $parameters = Parameter::all();
+        return view('material.create', compact('setup', 'stations', 'material_categories', 'parameters'));
     }
 
     /**
@@ -41,7 +44,22 @@ class MaterialController extends Controller
             "material_category_id" => "required",
             "name" => "required|unique:materials",
         ]);
-        Material::create($validated);
+
+        $material = Material::create($validated);
+
+        if ($request->has('parameter_ids')) {
+            MaterialParameter::where("material_id", $material->id)->delete();
+            $parameters = $request->input('parameter_ids');
+            foreach ($parameters as $parameterId) {
+                if (Parameter::where('id', $parameterId)->exists()) {
+                    MaterialParameter::create([
+                        'parameter_id' => $parameterId,
+                        'material_id' => $material->id,
+                    ]);
+                }
+            }
+        }
+
         return redirect()->back()->with("success", "Material has been created");
     }
 
@@ -62,7 +80,9 @@ class MaterialController extends Controller
         $material = Material::findOrFail($id);
         $stations = Station::all();
         $material_categories = MaterialCategory::all();
-        return view('material.edit', compact('setup', 'material', 'stations', 'material_categories'));
+        $parameters = Parameter::all();
+        $material_parameters = MaterialParameter::where("material_id", $id)->get();
+        return view('material.edit', compact('setup', 'material', 'stations', 'material_categories', 'parameters', 'material_parameters'));
     }
 
     /**
@@ -76,7 +96,21 @@ class MaterialController extends Controller
             "material_category_id" => "required",
             'name' => 'required|unique:materials,name,' . $material->id,
         ]);
-        Material::findOrFail($id)->update($validated);
+
+        if ($request->has('parameter_ids')) {
+            MaterialParameter::where("material_id", $id)->delete();
+            $features = $request->input('parameter_ids');
+            foreach ($features as $featureId) {
+                if (Parameter::where('id', $featureId)->exists()) {
+                    MaterialParameter::create([
+                        'parameter_id' => $featureId,
+                        'material_id' => $id,
+                    ]);
+                }
+            }
+        }
+
+        $material->update($validated);
         return redirect()->back()->with("success", "Material has been updated");
     }
 

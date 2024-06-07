@@ -127,8 +127,7 @@
                 in_array('measurement_unit.index', $permissions) ||
                 in_array('option', $permissions) ||
                 in_array('parameter', $permissions) ||
-                in_array('material', $permissions) ||
-                in_array('material_parameter', $permissions))
+                in_array('material', $permissions))
             <li
                 class="menu-item
                 @yield('station-active')
@@ -136,9 +135,7 @@
                 @yield('measurement_unit-active')
                 @yield('option-active')
                 @yield('parameter-active')
-                {{-- @yield('parameter_option-active') --}}
                 @yield('material-active')
-                @yield('material_parameter-active')
             ">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-data"></i>
@@ -190,15 +187,6 @@
                         <li class="menu-item @yield('material-active')">
                             <a href="{{ route('material.index') }}" class="menu-link">
                                 <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material')) }}
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                    @if (in_array('material_parameter.index', $permissions))
-                        <li class="menu-item @yield('material_parameter-active')">
-                            <a href="{{ route('material_parameter.index') }}" class="menu-link">
-                                <div data-i18n="Without menu">
-                                    {{ ucwords(str_replace('_', ' ', 'material_parameter')) }}
                                 </div>
                             </a>
                         </li>
