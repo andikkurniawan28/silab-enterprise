@@ -38,7 +38,7 @@ class AnalysisController extends Controller
                         if($parameter->type == "Numeric")
                         {
                             if (!empty($row->$parameter_name)) {
-                                $parameter_values .= '<li>' . $parameter->name . '<sub>(' . $parameter->measurement_unit->name . ')</sub> = ' . number_format($row->$parameter_name,2) . '</li>';
+                                $parameter_values .= '<li>' . $parameter->name . '<sub>(' . $parameter->measurement_unit->name . ')</sub> = ' . number_format($row->$parameter_name, $parameter->behind_decimal) . '</li>';
                             }
                         }
                         else if($parameter->type == "Option") {

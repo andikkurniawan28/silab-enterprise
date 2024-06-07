@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('type');
             $table->float('min')->nullable();
             $table->float('max')->nullable();
+            $table->integer('behind_decimal')->nullable();
+            $table->string('reporting_method');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

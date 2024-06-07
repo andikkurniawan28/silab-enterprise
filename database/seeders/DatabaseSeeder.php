@@ -141,10 +141,10 @@ class DatabaseSeeder extends Seeder
         Option::insert($options);
 
         $parameters = [
-            ["name" => "Brix", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
-            ["name" => "Pol", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
-            ["name" => "HK", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
-            ["name" => "Rendemen", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric'],
+            ["name" => "Brix", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
+            ["name" => "Pol", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
+            ["name" => "HK", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
+            ["name" => "Rendemen", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
         ];
         Parameter::insert($parameters);
 

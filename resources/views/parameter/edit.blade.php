@@ -85,6 +85,15 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="behind_decimal" id="label_behind_decimal" style="display: none;">
+                                    {{ ucwords(str_replace('_', ' ', 'behind_decimal')) }}
+                                </label>
+                                <div class="col-sm-10" id="input_behind_decimal" style="display: none;">
+                                    <input type="number" step="any" class="form-control" id="behind_decimal" name="behind_decimal" value="{{ $parameter->behind_decimal }}">
+                                </div>
+                            </div>
+
                             {{-- option --}}
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label option-section" style="display: none;">{{ ucwords(str_replace('_', ' ', 'options')) }}</label>
@@ -111,6 +120,20 @@
                                             </label>
                                         </div>
                                     @endforeach
+                                </div>
+                            </div>
+
+                            {{-- reporting_method --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">{{ ucwords(str_replace('_', ' ', 'reporting_method')) }}</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="reporting_method" name="reporting_method" required>
+                                        <option disabled selected>Select a {{ ucwords(str_replace('_', ' ', 'reporting_method')) }} :</option>
+                                        <option value="{{ ucwords(str_replace('_', ' ', 'average')) }}" @if($parameter->reporting_method == ucwords(str_replace('_', ' ', 'average'))) {{ "selected" }} @endif>{{ ucwords(str_replace('_', ' ', 'average')) }}</option>
+                                        <option value="{{ ucwords(str_replace('_', ' ', 'sum')) }}" @if($parameter->reporting_method == ucwords(str_replace('_', ' ', 'sum'))) {{ "selected" }} @endif>{{ ucwords(str_replace('_', ' ', 'sum')) }}</option>
+                                        <option value="{{ ucwords(str_replace('_', ' ', 'count')) }}" @if($parameter->reporting_method == ucwords(str_replace('_', ' ', 'count'))) {{ "selected" }} @endif>{{ ucwords(str_replace('_', ' ', 'count')) }}</option>
+                                        <option value="{{ ucwords(str_replace('_', ' ', 'qualitative')) }}" @if($parameter->reporting_method == ucwords(str_replace('_', ' ', 'qualitative'))) {{ "selected" }} @endif>{{ ucwords(str_replace('_', ' ', 'qualitative')) }}</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -156,6 +179,8 @@
             document.getElementById("input_min").style.display = "block";
             document.getElementById("label_max").style.display = "block";
             document.getElementById("input_max").style.display = "block";
+            document.getElementById("label_behind_decimal").style.display = "block";
+            document.getElementById("input_behind_decimal").style.display = "block";
         }
 
         function hideMinMax() {
@@ -163,6 +188,8 @@
             document.getElementById("input_min").style.display = "none";
             document.getElementById("label_max").style.display = "none";
             document.getElementById("input_max").style.display = "none";
+            document.getElementById("label_behind_decimal").style.display = "none";
+            document.getElementById("input_behind_decimal").style.display = "none";
         }
 
         function showOptions() {

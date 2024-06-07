@@ -44,6 +44,8 @@ class ParameterController extends Controller
             "type" => "required",
             "min" => "nullable|numeric",
             "max" => "nullable|numeric",
+            "behind_decimal" => "nullable|numeric",
+            "reporting_method" => "required",
         ]);
 
         $parameter = Parameter::create($validated);
@@ -98,6 +100,8 @@ class ParameterController extends Controller
             "type" => "required",
             "min" => "nullable|numeric",
             "max" => "nullable|numeric",
+            "behind_decimal" => "nullable|numeric",
+            "reporting_method" => "required",
         ]);
 
         if ($request->has('option_ids')) {

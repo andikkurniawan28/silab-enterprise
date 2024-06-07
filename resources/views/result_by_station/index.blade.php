@@ -72,7 +72,7 @@
                                                         @foreach ($material->material_parameter as $material_parameter)
                                                             <td>
                                                                 @if($material_parameter->parameter->type == "Numeric")
-                                                                    {{ !is_null($analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))}) ? number_format($analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))}, 2) : '' }}
+                                                                    {{ !is_null($analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))}) ? number_format($analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))}, $material_parameter->parameter->behind_decimal) : '' }}
                                                                 @elseif($material_parameter->parameter->type == "Option")
                                                                     {{ $analysis->{ucwords(str_replace(' ', '_', $material_parameter->parameter->name))} }}
                                                                 @endif

@@ -37,10 +37,13 @@
                                         @if($parameter->type == "Numeric")
                                             <li>Min : {{ $parameter->min }}</li>
                                             <li>Max : {{ $parameter->max }}</li>
+                                            <li>Behind Decimal : {{ $parameter->behind_decimal }}</li>
+                                            <li>Reporting Method : {{ $parameter->reporting_method }}</li>
                                         @elseif($parameter->type == "Option")
                                             @foreach($parameter->parameter_option as $parameter_option)
                                             <li>Option : {{ $parameter_option->option->name }}</li>
                                             @endforeach
+                                            <li>Reporting Method : {{ $parameter->reporting_method }}</li>
                                         @endif
                                     </td>
                                     <td>
