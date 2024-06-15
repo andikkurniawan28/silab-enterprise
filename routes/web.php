@@ -6,11 +6,13 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StationController;
 use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\ReportTypeController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ResultByStationController;
@@ -51,5 +53,8 @@ Route::get('/result_by_station/{station_id}', [ResultByStationController::class,
 Route::post('/result_by_station', [ResultByStationController::class, 'filter'])->name('result_by_station.filter');
 Route::get('/result_by_material_category/{material_category_id}', [ResultByMaterialCategoryController::class, 'index'])->name('result_by_material_category.index')->middleware(['auth', 'check.permission']);
 Route::post('/result_by_material_category', [ResultByMaterialCategoryController::class, 'filter'])->name('result_by_material_category.filter');
+Route::resource('/report_type', ReportTypeController::class)->middleware(['auth', 'check.permission']);
+Route::get('/report/{report_type_id}', [ReportController::class, 'index'])->name('report.index')->middleware(['auth', 'check.permission']);
+Route::post('/report', [ReportController::class, 'filter'])->name('report.filter');
 
 

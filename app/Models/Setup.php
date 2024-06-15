@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ReportType;
 use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,7 @@ class Setup extends Model
         $setup->permission = Permission::where("role_id", Auth()->user()->role_id)->with('feature')->get();
         $setup->stations = Station::all();
         $setup->material_categories = MaterialCategory::all();
+        $setup->report_types = ReportType::all();
         return $setup;
     }
 }

@@ -127,7 +127,8 @@
                 in_array('measurement_unit.index', $permissions) ||
                 in_array('option', $permissions) ||
                 in_array('parameter', $permissions) ||
-                in_array('material', $permissions))
+                in_array('material', $permissions) ||
+                in_array('report_type', $permissions))
             <li
                 class="menu-item
                 @yield('station-active')
@@ -136,6 +137,7 @@
                 @yield('option-active')
                 @yield('parameter-active')
                 @yield('material-active')
+                @yield('report_type-active')
             ">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-data"></i>
@@ -187,6 +189,14 @@
                         <li class="menu-item @yield('material-active')">
                             <a href="{{ route('material.index') }}" class="menu-link">
                                 <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'material')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('report_type.index', $permissions))
+                        <li class="menu-item @yield('report_type-active')">
+                            <a href="{{ route('report_type.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'report_type')) }}
                                 </div>
                             </a>
                         </li>
@@ -261,14 +271,14 @@
                 <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'report')) }}</div>
             </a>
             <ul class="menu-sub">
-                {{-- @foreach ($setup->material_categories as $material_category)
-                        <li class="menu-item @yield("result_by_material_category_id_{$material_category->id}-active")">
-                            <a href="{{ route('result_by_material_category.index', $material_category->id) }}" class="menu-link">
-                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', $material_category->name)) }}
+                @foreach ($setup->report_types as $report_type)
+                        <li class="menu-item">
+                            <a href="{{ route("report.index", $report_type->id) }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', $report_type->name)) }}
                                 </div>
                             </a>
                         </li>
-                @endforeach --}}
+                @endforeach
             </ul>
         </li>
 

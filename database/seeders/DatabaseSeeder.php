@@ -12,10 +12,13 @@ use App\Models\Station;
 use App\Models\Material;
 use App\Models\Parameter;
 use App\Models\Permission;
+use App\Models\ReportType;
 use App\Models\MeasurementUnit;
+use App\Models\ParameterOption;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use App\Models\MaterialParameter;
+use App\Models\ReportTypeContent;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -105,6 +108,13 @@ class DatabaseSeeder extends Seeder
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_station')), 'route' => 'result_by_station.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_material_category')), 'route' => 'result_by_material_category.index'],
             // ['name' => ucfirst(str_replace('_', ' ', 'results_by_station_get_results')), 'route' => 'results_by_station.getResults'],
+            ['name' => ucfirst(str_replace('_', ' ', 'list_of_report_type')), 'route' => 'report_type.index'],
+            ['name' => ucfirst(str_replace('_', ' ', 'create_report_type')), 'route' => 'report_type.create'],
+            ['name' => ucfirst(str_replace('_', ' ', 'save_report_type')), 'route' => 'report_type.store'],
+            ['name' => ucfirst(str_replace('_', ' ', 'edit_report_type')), 'route' => 'report_type.edit'],
+            ['name' => ucfirst(str_replace('_', ' ', 'update_report_type')), 'route' => 'report_type.update'],
+            ['name' => ucfirst(str_replace('_', ' ', 'delete_report_type')), 'route' => 'report_type.destroy'],
+            ['name' => ucfirst(str_replace('_', ' ', 'report')), 'route' => 'report.index'],
         ];
         Feature::insert($features);
 
@@ -118,12 +128,23 @@ class DatabaseSeeder extends Seeder
         $stations = [
             ["name" => "Gilingan"],
             ["name" => "Permurnian"],
+            ["name" => "DRK"],
+            ["name" => "Penguapan"],
+            ["name" => "Masakan"],
+            ["name" => "Puteran"],
+            ["name" => "Ketel"],
+            ["name" => "Listrik"],
         ];
         Station::insert($stations);
 
         $material_categories = [
             ["name" => "Nira"],
+            ["name" => "Baggase"],
             ["name" => "Masquite"],
+            ["name" => "Klare"],
+            ["name" => "Stroop"],
+            ["name" => "Remelter"],
+            ["name" => "Mollase"],
             ["name" => "Gula"],
         ];
         MaterialCategory::insert($material_categories);
@@ -131,6 +152,8 @@ class DatabaseSeeder extends Seeder
         $measurement_units = [
             ["name" => "%"],
             ["name" => "-"],
+            ["name" => "IU"],
+            ["name" => "&deg;Z"],
         ];
         MeasurementUnit::insert($measurement_units);
 
@@ -145,6 +168,8 @@ class DatabaseSeeder extends Seeder
             ["name" => "Pol", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
             ["name" => "HK", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
             ["name" => "Rendemen", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
+            ["name" => "Icumsa", "measurement_unit_id" => 3, "min" => 0, "max" => 100000, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 0],
+            ["name" => "Air", "measurement_unit_id" => 1, "min" => 0, "max" => 100, 'type' => 'Numeric', 'reporting_method' => 'Average', 'behind_decimal' => 2],
         ];
         Parameter::insert($parameters);
 
@@ -152,6 +177,19 @@ class DatabaseSeeder extends Seeder
             ["name" => "Nira Gilingan 1", "station_id" => 1, "material_category_id" => 1],
             ["name" => "Nira Gilingan 2", "station_id" => 1, "material_category_id" => 1],
             ["name" => "Nira Gilingan 3", "station_id" => 1, "material_category_id" => 1],
+            ["name" => "Nira Gilingan 4", "station_id" => 1, "material_category_id" => 1],
+            ["name" => "Nira Gilingan 5", "station_id" => 1, "material_category_id" => 1],
+            ["name" => "Ampas Gilingan 1", "station_id" => 1, "material_category_id" => 2],
+            ["name" => "Ampas Gilingan 2", "station_id" => 1, "material_category_id" => 2],
+            ["name" => "Ampas Gilingan 3", "station_id" => 1, "material_category_id" => 2],
+            ["name" => "Ampas Gilingan 4", "station_id" => 1, "material_category_id" => 2],
+            ["name" => "Ampas Gilingan 5", "station_id" => 1, "material_category_id" => 2],
+            ["name" => "Nira Mentah", "station_id" => 2, "material_category_id" => 1],
+            ["name" => "Nira Mentah Sulfitasi", "station_id" => 2, "material_category_id" => 1],
+            ["name" => "Nira Tapis", "station_id" => 2, "material_category_id" => 1],
+            ["name" => "Nira Encer", "station_id" => 2, "material_category_id" => 1],
+            ["name" => "Nira Kental", "station_id" => 3, "material_category_id" => 1],
+            ["name" => "Nira Kental Sulfitasi", "station_id" => 3, "material_category_id" => 1],
         ];
         Material::insert($materials);
 
@@ -168,6 +206,18 @@ class DatabaseSeeder extends Seeder
             $column_name = str_replace(' ', '_', $list->name);
             $alter_query = "ALTER TABLE analyses ADD COLUMN `{$column_name}` FLOAT NULL";
             DB::statement($alter_query);
+        }
+
+        $report_types = [
+            ["name" => ucwords(str_replace('_', ' ', 'daily_report'))],
+        ];
+        ReportType::insert($report_types);
+
+        foreach(Material::all() as $material){
+            ReportTypeContent::insert([
+                "report_type_id" => 1,
+                "material_id" => $material->id,
+            ]);
         }
     }
 }
