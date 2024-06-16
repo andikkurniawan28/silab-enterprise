@@ -49,7 +49,7 @@ class AuthController extends Controller
     {
         $request->session()->put('from_datetime', $request->input('from_datetime'));
         $request->session()->put('to_datetime', $request->input('to_datetime'));
-        return redirect()->back()->with("success", "Datetime has been updated");
+        return redirect()->back()->with("success", "Timeframe has been updated");
     }
 
 }

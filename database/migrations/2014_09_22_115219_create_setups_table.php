@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('setups', function (Blueprint $table) {
             $table->id();
             $table->string('app_name');
+            $table->string('company_name');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

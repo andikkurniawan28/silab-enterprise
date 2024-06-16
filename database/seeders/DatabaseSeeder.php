@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
     {
         $setup = [
             'app_name' => ucwords(str_replace('_', ' ', 'silab')),
+            'company_name' => ucwords(str_replace('_', ' ', 'CV._kendali_sinergi_aktif')),
         ];
         Setup::insert($setup);
 

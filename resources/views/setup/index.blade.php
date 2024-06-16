@@ -34,6 +34,14 @@
                                     <input type="text" class="form-control" id="app_name" name="app_name" value="{{ $setup->app_name }}" required autofocus>
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="company_name">
+                                    {{ ucwords(str_replace('_', ' ', 'company_name')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="company_name" name="company_name" value="{{ $setup->company_name }}" required>
+                                </div>
+                            </div>
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-primary">Update</button>

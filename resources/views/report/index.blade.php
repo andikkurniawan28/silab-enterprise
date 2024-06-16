@@ -41,11 +41,25 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="card mb-4 shadow">
                             <div class="card-header">
-                                <h5 class="card-title">
-                                    {{ ucwords(str_replace('_', ' ', $report_type->name)) }}
-                                </h5>
+                                <h2 class="card-title">
+                                    {{ ucwords(str_replace('_', ' ', $setup->company_name)) }}
+                                </h2>
                             </div>
                             <div class="card-body">
+                                <h5>{{ ucwords(str_replace('_', ' ', $report_type->name)) }}</h5>
+                                <table>
+                                    <tr>
+                                        <td>From</td>
+                                        <td>:</td>
+                                        <td>{{ date("d-m-Y H:i:s", strtotime(session("from_datetime"))) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>To</td>
+                                        <td>:</td>
+                                        <td>{{ date("d-m-Y H:i:s", strtotime(session("to_datetime"))) }}</td>
+                                    </tr>
+                                </table>
+                                <br>
                                 <div class="table-responsive">
                                     <table class="table table-sm table-hover">
                                         <thead>
@@ -108,13 +122,19 @@
     <script>
         function printReport() {
             var printContents = document.getElementById('printable').innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
+            var newWindow = window.open('', '_blank', 'width=800, height=600');
+            newWindow.document.write('<html><head><title>Print Report</title>');
+            newWindow.document.write('<link rel="stylesheet" href="{{ asset('sneat/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />');
+            newWindow.document.write('<link rel="stylesheet" href="{{ asset('sneat/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />');
+            newWindow.document.write('<link rel="stylesheet" href="{{ asset('sneat/assets/css/demo.css') }}" />');
+            newWindow.document.write('</head><body>');
+            newWindow.document.write(printContents);
+            newWindow.document.write('</body></html>');
+            newWindow.document.close();
+            newWindow.onload = function() {
+                newWindow.print();
+                newWindow.close();
+            };
         }
 
         function exportToPDF() {
