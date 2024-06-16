@@ -7,8 +7,7 @@
 @section('content')
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-
-        <h4>{{ ucwords(str_replace(" ", "_", "dashboard")) }}</h4>
+        <h4>{{ ucwords(str_replace(' ', '_', 'dashboard')) }}</h4>
 
         <div class="row">
             <!-- Form with station dropdown and date & time inputs -->
@@ -44,7 +43,6 @@
                                         </h4>
                                         <br>
                                         <canvas id="chart-{{ $monitoring->id }}"></canvas>
-                                        {{-- {{ json_encode($monitoring->data) }} --}}
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +75,57 @@
                     </div>
                 @endif
             @endforeach
+
         </div>
     </div>
     <!-- / Content -->
+@endsection
+
+@section('additional_script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @foreach ($setup->monitorings as $monitoring)
+                @if ($monitoring->method == 'Trendline')
+                    const ctx = document.getElementById('chart-{{ $monitoring->id }}').getContext('2d');
+                    const labels = {!! json_encode(array_column($monitoring->data, 'date')) !!};
+                    const data = {!! json_encode(array_column($monitoring->data, 'value')) !!};
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels.map(timestamp => new Date(timestamp *
+                            1000)), // Konversi Unix timestamp menjadi objek Date
+                            datasets: [{
+                                label: '{{ $monitoring->parameter->name }}',
+                                data: data,
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    type: 'time',
+                                    time: {
+                                        tooltipFormat: 'll HH:mm', // Format tooltip sesuaikan dengan kebutuhan Anda
+                                        unit: 'day'
+                                    },
+                                    ticks: {
+                                        source: 'data' // Gunakan 'data' untuk mengambil label dari data
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                @endif
+            @endforeach
+        });
+    </script>
 @endsection

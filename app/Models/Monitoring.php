@@ -77,7 +77,7 @@ class Monitoring extends Model
                         ->get(['created_at', $parameter])
                         ->map(function ($item) use ($parameter) {
                             return [
-                                'date' => $item->created_at->format('Y-m-d H:i:s'),
+                                'date' => strtotime($item->created_at),
                                 'value' => $item->$parameter
                             ];
                         })
