@@ -11,7 +11,6 @@
         <h4>{{ ucwords(str_replace(" ", "_", "dashboard")) }}</h4>
 
         <div class="row">
-
             <!-- Form with station dropdown and date & time inputs -->
             <form id="filterForm" action="{{ route('change_datetime') }}" method="POST">
                 @csrf
@@ -32,16 +31,36 @@
             </form>
 
             @foreach ($setup->monitorings as $monitoring)
-                <div class="col-lg-3 mb-4 order-0">
-                    <div class="card bg-primary">
-                        <div class="d-flex align-items-end row">
-                            <div class="col-sm-12">
-                                <div class="card-body text-center">
-                                    <h4 class="card-title text-white">
-                                        {{ $monitoring->parameter->name }}
-                                        {{ $monitoring->material->name }}
-                                        {{ $monitoring->method }}
-                                        </h5>
+                @if ($monitoring->method == 'Trendline')
+                    <div class="col-lg-12 mb-4 order-0">
+                        <div class="card bg-primary">
+                            <div class="d-flex align-items-end row">
+                                <div class="col-sm-12">
+                                    <div class="card-body text-center">
+                                        <h4 class="card-title text-white">
+                                            {{ $monitoring->parameter->name }}
+                                            {{ $monitoring->material->name }}
+                                            {{ $monitoring->method }}
+                                        </h4>
+                                        <br>
+                                        <canvas id="chart-{{ $monitoring->id }}"></canvas>
+                                        {{-- {{ json_encode($monitoring->data) }} --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-lg-3 mb-4 order-0">
+                        <div class="card bg-primary">
+                            <div class="d-flex align-items-end row">
+                                <div class="col-sm-12">
+                                    <div class="card-body text-center">
+                                        <h4 class="card-title text-white">
+                                            {{ $monitoring->parameter->name }}
+                                            {{ $monitoring->material->name }}
+                                            {{ $monitoring->method }}
+                                        </h4>
                                         <br>
                                         <h2 class="mb-4 text-white">
                                             @if ($monitoring->data != null)
@@ -50,14 +69,14 @@
                                             @else
                                                 -
                                             @endif
-                                            </h5>
+                                        </h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
-
         </div>
     </div>
     <!-- / Content -->

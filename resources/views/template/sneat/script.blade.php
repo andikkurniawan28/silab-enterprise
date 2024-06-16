@@ -38,7 +38,9 @@
 
 <script>
     new DataTable('#example', {
-        order: [[0, 'desc']],
+        order: [
+            [0, 'desc']
+        ],
         layout: {
             bottomStart: {
                 buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5'],
@@ -52,9 +54,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        Chart.register(ChartDate);
+
         @if (session('success'))
             Swal.fire({
                 icon: 'success',
@@ -84,6 +90,42 @@
                 `,
             });
         @endif
+
+        @foreach ($setup->monitorings as $monitoring)
+            @if ($monitoring->method == 'Trendline')
+                const ctx = document.getElementById('chart-{{ $monitoring->id }}').getContext('2d');
+                const labels = {!! json_encode(array_column($monitoring->data, 'date')) !!};
+                const data = {!! json_encode(array_column($monitoring->data, 'value')) !!};
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '{{ $monitoring->parameter->name }}',
+                            data: data,
+                            borderColor: 'rgba(255, 99, 132, 1)', // Mengganti warna border menjadi merah
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Mengganti warna background menjadi merah
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    },
+                });
+            @endif
+        @endforeach
     });
 </script>
-@yield("additional_script")
+@yield('additional_script')

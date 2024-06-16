@@ -26,51 +26,67 @@ class Monitoring extends Model
     {
         $analytics = self::all();
 
-        foreach($analytics as $analytic){
+        foreach ($analytics as $analytic) {
             $parameter = str_replace(" ", "_", $analytic->parameter->name);
 
-            switch($analytic->method){
+            switch ($analytic->method) {
 
-                case "Latest" :
+                case "Latest":
                     $data = Analysis::where("material_id", $analytic->material_id)
-                            ->whereNotNull($parameter)
-                            ->get()->last()->$parameter ?? null;
+                        ->whereNotNull($parameter)
+                        ->latest()
+                        ->value($parameter) ?? null;
                     break;
 
-                case "Average" :
+                case "Average":
                     $data = Analysis::where("material_id", $analytic->material_id)
-                            ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
-                            ->avg($parameter) ?? null;
+                        ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
+                        ->avg($parameter) ?? null;
                     break;
 
-                case "Minimum" :
+                case "Minimum":
                     $data = Analysis::where("material_id", $analytic->material_id)
-                            ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
-                            ->min($parameter) ?? null;
+                        ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
+                        ->min($parameter) ?? null;
                     break;
 
-                case "Maximum" :
+                case "Maximum":
                     $data = Analysis::where("material_id", $analytic->material_id)
-                            ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
-                            ->max($parameter) ?? null;
+                        ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
+                        ->max($parameter) ?? null;
                     break;
 
-                case "Summary" :
+                case "Summary":
                     $data = Analysis::where("material_id", $analytic->material_id)
-                            ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
-                            ->sum($parameter) ?? null;
+                        ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
+                        ->sum($parameter) ?? null;
                     break;
 
-                case "Count" :
+                case "Count":
                     $data = Analysis::where("material_id", $analytic->material_id)
-                            ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
-                            ->count($parameter) ?? null;
+                        ->whereBetween("created_at", [session('from_datetime'), session('to_datetime')])
+                        ->count() ?? null;
                     break;
 
-                default :
+                case "Trendline":
+                    $from = session('from_datetime');
+                    $to = session('to_datetime');
+                    $data = Analysis::where("material_id", $analytic->material_id)
+                        ->whereBetween("created_at", [$from, $to])
+                        ->orderBy("created_at")
+                        ->get(['created_at', $parameter])
+                        ->map(function ($item) use ($parameter) {
+                            return [
+                                'date' => $item->created_at->format('Y-m-d H:i:s'),
+                                'value' => $item->$parameter
+                            ];
+                        })
+                        ->toArray();
+                    break;
+
+                default:
                     $data = null;
                     break;
-
             }
 
             $analytic->data = $data;
@@ -78,5 +94,4 @@ class Monitoring extends Model
 
         return $analytics;
     }
-
 }

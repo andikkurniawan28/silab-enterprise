@@ -14,6 +14,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $setup = Setup::init();
+        // return $setup->monitorings;
         return view("dashboard.index", compact('setup'));
     }
 }
