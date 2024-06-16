@@ -80,7 +80,7 @@
                                                                 @if(is_array($aggregated_values))
                                                                     <ul>
                                                                         @foreach($aggregated_values as $option_name => $count)
-                                                                            <li>{{ $option_name }}: {{ $count }} %</li>
+                                                                            <li>{{ $option_name }}: {{ $count }}%</li>
                                                                         @endforeach
                                                                     </ul>
                                                                 @else
