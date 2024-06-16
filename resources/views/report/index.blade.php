@@ -32,11 +32,12 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm" id="filterButton">Filter</button>
-                    <button type="button" class="btn btn-secondary btn-sm" id="printButton" onclick="window.print()">Print</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="printButton" onclick="printReport()">Print</button>
+                    <button type="button" class="btn btn-success btn-sm" id="exportButton" onclick="exportToPDF()">Export to PDF</button>
                 </form>
 
                 {{-- Tampilkan kartu di sini --}}
-                <div class="row mt-4" id="printed">
+                <div class="row mt-4" id="printable">
                     <div class="col-lg-12 col-md-12">
                         <div class="card mb-4 shadow">
                             <div class="card-header">
@@ -52,14 +53,12 @@
                                                 <th>{{ ucwords(str_replace('_', ' ', 'material')) }}</th>
                                                 @foreach ($parameters as $parameter)
                                                     <th>
-                                                        {{ ucwords(str_replace('_', ' ', $parameter->parameter->name)) }}
-                                                        <sub>(@php echo $parameter->parameter->measurement_unit->name; @endphp)</sub>
+                                                        {{ ucwords(str_replace('_', ' ', $parameter->parameter->name)) }}<sub>(@php echo $parameter->parameter->measurement_unit->name; @endphp)</sub>
                                                     </th>
                                                 @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @foreach($materials as $material)
                                                 <tr>
                                                     <td>{{ ucwords(str_replace('_', ' ', $material->name)) }}</td>
@@ -81,7 +80,7 @@
                                                                 @if(is_array($aggregated_values))
                                                                     <ul>
                                                                         @foreach($aggregated_values as $option_name => $count)
-                                                                            <li>{{ $option_name }}: {{ $count }}</li>
+                                                                            <li>{{ $option_name }}: {{ $count }} %</li>
                                                                         @endforeach
                                                                     </ul>
                                                                 @else
@@ -92,7 +91,6 @@
                                                     @endforeach
                                                 </tr>
                                             @endforeach
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -107,5 +105,38 @@
 @endsection
 
 @section('additional_script')
-    <!-- Tidak ada JavaScript tambahan -->
+    <script>
+        function printReport() {
+            var printContents = document.getElementById('printable').innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const elementHTML = document.getElementById('printable');
+            const options = {
+                callback: function (doc) {
+                    doc.save('{{ ucwords(str_replace('_', ' ', $report_type->name)) }}.pdf');
+                },
+                x: 10,
+                y: 10,
+                width: 180, // Adjust the width according to your content
+                windowWidth: 650 // Adjust the window width for scaling
+            };
+            html2canvas(elementHTML, {
+                scale: 2
+            }).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                doc.addImage(imgData, 'PNG', options.x, options.y, options.width, options.width * canvas.height / canvas.width);
+                doc.save('{{ ucwords(str_replace('_', ' ', $report_type->name)) }}.pdf');
+            });
+        }
+    </script>
 @endsection

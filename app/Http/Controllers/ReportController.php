@@ -77,13 +77,21 @@ class ReportController extends Controller
                         // Menghitung jumlah kemunculan setiap opsi parameter.
                         $aggregated_value = [];
                         $options = $pd->parameter->parameter_option->pluck('option')->flatten();
+
+                        // Menghitung total jumlah entri untuk parameter tersebut.
+                        $total_count = Analysis::where('material_id', $material->id)
+                            ->whereBetween('created_at', [$from_datetime, $to_datetime])
+                            ->count();
+
                         foreach ($options as $option) {
                             $count = Analysis::where('material_id', $material->id)
                                 ->whereBetween('created_at', [$from_datetime, $to_datetime])
                                 ->where($parameter_name, $option->name)
                                 ->count();
-                            $aggregated_value[$option->name] = $count;
-                        }
+                            // Menghitung persentase kemunculan setiap opsi.
+                            $percentage = $total_count > 0 ? ($count / $total_count) * 100 : 0;
+                            $aggregated_value[$option->name] = $percentage;
+                            }
                         break;
 
                     default:
