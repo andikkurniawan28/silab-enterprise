@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Monitoring;
 use App\Models\ReportType;
 use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,7 @@ class Setup extends Model
         $setup->stations = Station::all();
         $setup->material_categories = MaterialCategory::all();
         $setup->report_types = ReportType::all();
+        $setup->monitorings = Monitoring::serve();
         return $setup;
     }
 }

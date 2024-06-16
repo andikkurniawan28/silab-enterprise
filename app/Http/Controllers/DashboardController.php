@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setup;
+use App\Models\Analytic;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller

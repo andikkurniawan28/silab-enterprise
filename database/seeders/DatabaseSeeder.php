@@ -107,7 +107,6 @@ class DatabaseSeeder extends Seeder
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_material')), 'route' => 'result_by_material.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_station')), 'route' => 'result_by_station.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'result_by_material_category')), 'route' => 'result_by_material_category.index'],
-            // ['name' => ucfirst(str_replace('_', ' ', 'results_by_station_get_results')), 'route' => 'results_by_station.getResults'],
             ['name' => ucfirst(str_replace('_', ' ', 'list_of_report_type')), 'route' => 'report_type.index'],
             ['name' => ucfirst(str_replace('_', ' ', 'create_report_type')), 'route' => 'report_type.create'],
             ['name' => ucfirst(str_replace('_', ' ', 'save_report_type')), 'route' => 'report_type.store'],
@@ -115,6 +114,12 @@ class DatabaseSeeder extends Seeder
             ['name' => ucfirst(str_replace('_', ' ', 'update_report_type')), 'route' => 'report_type.update'],
             ['name' => ucfirst(str_replace('_', ' ', 'delete_report_type')), 'route' => 'report_type.destroy'],
             ['name' => ucfirst(str_replace('_', ' ', 'report')), 'route' => 'report.index'],
+            ['name' => ucfirst(str_replace('_', ' ', 'list_of_monitoring')), 'route' => 'monitoring.index'],
+            ['name' => ucfirst(str_replace('_', ' ', 'create_monitoring')), 'route' => 'monitoring.create'],
+            ['name' => ucfirst(str_replace('_', ' ', 'save_monitoring')), 'route' => 'monitoring.store'],
+            ['name' => ucfirst(str_replace('_', ' ', 'edit_monitoring')), 'route' => 'monitoring.edit'],
+            ['name' => ucfirst(str_replace('_', ' ', 'update_monitoring')), 'route' => 'monitoring.update'],
+            ['name' => ucfirst(str_replace('_', ' ', 'delete_monitoring')), 'route' => 'monitoring.destroy'],
         ];
         Feature::insert($features);
 

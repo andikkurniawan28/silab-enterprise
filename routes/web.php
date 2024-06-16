@@ -12,6 +12,7 @@ use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ReportTypeController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\MeasurementUnitController;
@@ -56,5 +57,6 @@ Route::post('/result_by_material_category', [ResultByMaterialCategoryController:
 Route::resource('/report_type', ReportTypeController::class)->middleware(['auth', 'check.permission']);
 Route::get('/report/{report_type_id}', [ReportController::class, 'index'])->name('report.index')->middleware(['auth', 'check.permission']);
 Route::post('/report', [ReportController::class, 'filter'])->name('report.filter');
+Route::resource('/monitoring', MonitoringController::class)->middleware(['auth', 'check.permission']);
 
 

@@ -205,8 +205,12 @@
             </li>
         @endif
 
-        @if (in_array('analysis.index', $permissions))
-            <li class="menu-item @yield('analysis-active')">
+        @if (in_array('analysis.index', $permissions) ||
+            in_array('monitoring.index', $permissions))
+            <li class="menu-item
+                @yield('analysis-active')
+                @yield('monitoring-active')
+            ">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-transfer"></i>
                     <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'transaction')) }}</div>
@@ -216,6 +220,14 @@
                         <li class="menu-item @yield('analysis-active')">
                             <a href="{{ route('analysis.index') }}" class="menu-link">
                                 <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'analysis')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('monitoring.index', $permissions))
+                        <li class="menu-item @yield('monitoring-active')">
+                            <a href="{{ route('monitoring.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'monitoring')) }}
                                 </div>
                             </a>
                         </li>
