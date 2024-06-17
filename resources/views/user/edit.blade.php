@@ -58,6 +58,14 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="password">
+                                    {{ ucwords(str_replace('_', ' ', 'password')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="password" name="password" value="" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="is_active">
                                     {{ ucwords(str_replace('_', ' ', 'is_active')) }}
                                 </label>

@@ -70,15 +70,27 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+
+        // Validasi input
         $validated = $request->validate([
             "role_id" => "required",
             "name" => "required",
             'username' => 'required|unique:users,username,' . $user->id,
             "is_active" => "required",
+            "password" => "nullable|min:8", // Jika password diinputkan, minimal 8 karakter
         ]);
-        User::findOrFail($id)->update($validated);
+
+        // Jika ada input password baru, bcrypt password
+        if ($request->filled('password')) {
+            $validated['password'] = bcrypt($request->password);
+        }
+
+        // Update data pengguna
+        $user->update($validated);
+
         return redirect()->back()->with("success", "User has been updated");
     }
+
 
     /**
      * Remove the specified resource from storage.
