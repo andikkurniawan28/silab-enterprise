@@ -4,10 +4,6 @@
     {{ 'active' }}
 @endsection
 
-{{-- @section("report_id_{$report_type_selected->id}-active")
-    {{ 'active' }}
-@endsection --}}
-
 @section('content')
     @csrf
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -42,7 +38,9 @@
                         <div class="card mb-4 shadow">
                             <div class="card-header">
                                 <h2 class="card-title">
-                                    {{ ucwords(str_replace('_', ' ', $setup->company_name)) }}
+                                    @if(isset($setup->company_logo) && $setup->company_logo)
+                                        <img src="{{ asset($setup->company_logo) }}" alt="Company Logo" style="height: 100px; max-width: 200px;">
+                                    @endif
                                 </h2>
                             </div>
                             <div class="card-body">

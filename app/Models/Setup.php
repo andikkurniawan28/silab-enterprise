@@ -12,6 +12,8 @@ class Setup extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public static function init()
     {
         $setup = self::get()->last();

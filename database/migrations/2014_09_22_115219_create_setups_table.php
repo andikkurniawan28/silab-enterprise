@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('app_name');
             $table->string('company_name');
+            $table->string('company_logo')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
