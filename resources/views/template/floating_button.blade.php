@@ -25,7 +25,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
             </div>
         </div>
