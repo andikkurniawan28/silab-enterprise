@@ -99,7 +99,6 @@
 <script>
     function search() {
         const searchInputValue = document.getElementById('search_input').value.trim();
-        console.log('Search input value:', searchInputValue);
 
         // Fetch CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -125,7 +124,6 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log('API response:', data);
 
             const searchSuggestions = document.getElementById('searchSuggestions');
             searchSuggestions.innerHTML = '';
@@ -154,7 +152,6 @@
     }
 
     function handleSuggestionClick(materialId) {
-        console.log('Material ID clicked:', materialId);
 
         // Redirect to result_by_material.index with material_id parameter
         window.location.href = `{{ route('result_by_material.index', ':material_id') }}`.replace(':material_id', materialId);

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('analyses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('material_id')->constrained();
-            $table->foreignId('user_id')->constrained();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

@@ -26,7 +26,6 @@
                                 <th>{{ ucwords(str_replace('_', ' ', 'timestamp')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'material')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'analyses')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'user')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'manage')) }}</th>
                             </tr>
                         </thead>
@@ -58,7 +57,6 @@
                     { data: 'created_at', name: 'created_at' },
                     { data: 'material_id', name: 'material.name' },
                     { data: 'parameters', name: 'parameters', orderable: false, searchable: false },
-                    { data: 'user_id', name: 'user.name' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ],
                 initComplete: function(settings, json) {

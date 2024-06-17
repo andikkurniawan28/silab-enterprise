@@ -126,9 +126,9 @@
                                 y: {
                                     beginAtZero: true,
                                     min: Math.min(...
-                                    dataValues{{ $monitoring->id }}) - 1, // Menentukan nilai minimum dari data
+                                    dataValues{{ $monitoring->id }}) - 0.5, // Menentukan nilai minimum dari data
                                     max: Math.max(...
-                                    dataValues{{ $monitoring->id }}) + 1, // Menentukan nilai maksimum dari data
+                                    dataValues{{ $monitoring->id }}) + 0.5, // Menentukan nilai maksimum dari data
                                     ticks: {
                                         color: 'white',
                                     },
