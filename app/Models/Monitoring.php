@@ -73,15 +73,10 @@ class Monitoring extends Model
                     $to = session('to_datetime');
                     $data = Analysis::where("material_id", $analytic->material_id)
                         ->whereBetween("created_at", [$from, $to])
+                        ->whereNotNull($parameter)
                         ->orderBy("created_at")
-                        ->get(['created_at', $parameter])
-                        ->map(function ($item) use ($parameter) {
-                            return [
-                                'date' => strtotime($item->created_at),
-                                'value' => $item->$parameter
-                            ];
-                        })
-                        ->toArray();
+                        ->select("created_at", $parameter)
+                        ->get();
                     break;
 
                 default:

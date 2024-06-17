@@ -31,7 +31,7 @@
 
             @foreach ($setup->monitorings as $monitoring)
                 @if ($monitoring->method == 'Trendline')
-                    <div class="col-lg-12 mb-4 order-0">
+                    <div class="col-lg-6 mb-4 order-0">
                         <div class="card bg-primary">
                             <div class="d-flex align-items-end row">
                                 <div class="col-sm-12">
@@ -88,41 +88,56 @@
         document.addEventListener('DOMContentLoaded', function() {
             @foreach ($setup->monitorings as $monitoring)
                 @if ($monitoring->method == 'Trendline')
-                    const ctx = document.getElementById('chart-{{ $monitoring->id }}').getContext('2d');
-                    const labels = {!! json_encode(array_column($monitoring->data, 'date')) !!};
-                    const data = {!! json_encode(array_column($monitoring->data, 'value')) !!};
+                    const ctx{{ $monitoring->id }} = document.getElementById('chart-{{ $monitoring->id }}')
+                        .getContext('2d');
+                    const labels{{ $monitoring->id }} = {!! json_encode(
+                        $monitoring->data->pluck('created_at')->map(function ($date) {
+                            return \Carbon\Carbon::parse($date)->format('d-m-Y H:i');
+                        }),
+                    ) !!};
+                    const dataValues{{ $monitoring->id }} = {!! json_encode($monitoring->data->pluck($monitoring->parameter->name)) !!};
 
-                    new Chart(ctx, {
+                    new Chart(ctx{{ $monitoring->id }}, {
                         type: 'line',
                         data: {
-                            labels: labels.map(timestamp => new Date(timestamp *
-                            1000)), // Konversi Unix timestamp menjadi objek Date
+                            labels: labels{{ $monitoring->id }},
                             datasets: [{
                                 label: '{{ $monitoring->parameter->name }}',
-                                data: data,
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                fill: false
-                            }]
+                                data: dataValues{{ $monitoring->id }},
+                                borderColor: 'white',
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                fill: false,
+                            }],
                         },
                         options: {
                             responsive: true,
                             scales: {
                                 x: {
-                                    type: 'time',
-                                    time: {
-                                        tooltipFormat: 'll HH:mm', // Format tooltip sesuaikan dengan kebutuhan Anda
-                                        unit: 'day'
-                                    },
+                                    type: 'category',
+                                    labels: labels{{ $monitoring->id }},
                                     ticks: {
-                                        source: 'data' // Gunakan 'data' untuk mengambil label dari data
-                                    }
+                                        color: 'white',
+                                    },
                                 },
                                 y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
+                                    beginAtZero: true,
+                                    min: Math.min(...
+                                    dataValues{{ $monitoring->id }}) - 1, // Menentukan nilai minimum dari data
+                                    max: Math.max(...
+                                    dataValues{{ $monitoring->id }}) + 1, // Menentukan nilai maksimum dari data
+                                    ticks: {
+                                        color: 'white',
+                                    },
+                                },
+                            },
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: 'white',
+                                    },
+                                },
+                            },
+                        },
                     });
                 @endif
             @endforeach
