@@ -25,13 +25,14 @@
     </div>
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
         <!-- Search -->
         <div class="navbar-nav align-items-center position-relative">
             <div class="nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
                 <meta name="csrf-token" content="{{ csrf_token() }}">
-                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                    aria-label="Search..." id="search_input" oninput="search()" autocomplete="off"/>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Search material..."
+                    aria-label="Search material..." id="search_input" oninput="search()" autocomplete="off"/>
 
                 <!-- Suggestions dropdown -->
                 <ul id="searchSuggestions" class="dropdown-menu dropdown-menu-end position-absolute start-0 mt-2"
