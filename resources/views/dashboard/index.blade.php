@@ -10,24 +10,6 @@
         <h4>{{ ucwords(str_replace(' ', '_', 'dashboard')) }}</h4>
 
         <div class="row">
-            <!-- Form with station dropdown and date & time inputs -->
-            <form id="filterForm" action="{{ route('change_datetime') }}" method="POST">
-                @csrf
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="from_datetime" class="form-label">From</label>
-                        <input type="datetime-local" class="form-control" id="from_datetime" name="from_datetime"
-                            value="{{ session('from_datetime') }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="to_datetime" class="form-label">To</label>
-                        <input type="datetime-local" class="form-control" id="to_datetime" name="to_datetime"
-                            value="{{ session('to_datetime') }}">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-sm" id="filterButton">Filter</button>
-                <br><br>
-            </form>
 
             @foreach ($setup->monitorings as $monitoring)
                 @if ($monitoring->method == 'Trendline')

@@ -22,6 +22,7 @@
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
                     @yield('content')
+                    @include("template.floating_button")
                     @include('template.sneat.footer')
                     <div class="content-backdrop fade"></div>
                 </div>

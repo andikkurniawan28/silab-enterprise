@@ -12,25 +12,8 @@
 
                 <h4>Report</h4>
 
-                <!-- Form with report_type dropdown and date & time inputs -->
-                <form id="filterForm" action="{{ route('change_datetime') }}" method="POST">
-                    @csrf
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="from_datetime" class="form-label">From</label>
-                            <input type="datetime-local" class="form-control" id="from_datetime" name="from_datetime"
-                                value="{{ session('from_datetime') }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="to_datetime" class="form-label">To</label>
-                            <input type="datetime-local" class="form-control" id="to_datetime" name="to_datetime"
-                                value="{{ session('to_datetime') }}">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm" id="filterButton">Filter</button>
-                    <button type="button" class="btn btn-secondary btn-sm" id="printButton" onclick="printReport()">Print</button>
-                    <button type="button" class="btn btn-success btn-sm" id="exportButton" onclick="exportToPDF()">Export to PDF</button>
-                </form>
+                <button type="button" class="btn btn-secondary btn-sm" id="printButton" onclick="printReport()">Print</button>
+                <button type="button" class="btn btn-success btn-sm" id="exportButton" onclick="exportToPDF()">Export to PDF</button>
 
                 {{-- Tampilkan kartu di sini --}}
                 <div class="row mt-4" id="printable">

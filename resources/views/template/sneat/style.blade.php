@@ -54,3 +54,25 @@
     }
 </style>
 
+
+<style>
+    .floating-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000; /* Adjust z-index to make sure it's above other content */
+        border-radius: 50%; /* Make it circular */
+        width: 60px;
+        height: 60px;
+        background-color: #007bff; /* Primary color, change as needed */
+        color: white; /* Text color */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+        border: none; /* Optional: Remove border */
+        cursor: pointer;
+    }
+
+    .floating-button i {
+        font-size: 24px; /* Adjust icon size */
+    }
+</style>
+

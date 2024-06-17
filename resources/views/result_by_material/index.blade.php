@@ -15,22 +15,6 @@
             <div class="card-body">
                 <h4>Result of <strong>@yield('title')</strong></h4>
 
-                <!-- Form with date & time inputs -->
-                <form id="datetimeForm" action="{{ route('change_datetime') }}" method="POST">
-                    @csrf
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="from_datetime" class="form-label">From</label>
-                            <input type="datetime-local" class="form-control" id="from_datetime" name="from_datetime" value="{{ session("from_datetime") }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="to_datetime" class="form-label">To</label>
-                            <input type="datetime-local" class="form-control" id="to_datetime" name="to_datetime" value="{{ session("to_datetime") }}">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm" id="filterButton">Filter</button>
-                </form>
-
                 <div class="table-responsive">
                     <span class="half-line-break"></span>
                     <table class="table table-bordered table-hovered" id="results_by_material_table" width="100%">
