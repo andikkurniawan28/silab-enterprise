@@ -122,4 +122,11 @@ class MaterialController extends Controller
         Material::findOrFail($id)->delete();
         return redirect()->back()->with("success", "Material has been deleted");
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $materials = Material::where('name', 'like', $query . '%')->get();
+        return response()->json($materials);
+    }
 }

@@ -36,11 +36,13 @@
                             <div class="d-flex align-items-end row">
                                 <div class="col-sm-12">
                                     <div class="card-body text-center">
-                                        <h4 class="card-title text-white">
-                                            {{ $monitoring->parameter->name }}
-                                            {{ $monitoring->material->name }}
+                                        <h6 class="card-title text-white">
                                             {{ $monitoring->method }}
-                                        </h4>
+                                            {{ $monitoring->material->name }}
+                                        </h6>
+                                        <h6 class="card-title text-white">
+                                            {{ $monitoring->parameter->name }}
+                                        </h6>
                                         <br>
                                         <canvas id="chart-{{ $monitoring->id }}"></canvas>
                                     </div>
@@ -54,11 +56,13 @@
                             <div class="d-flex align-items-end row">
                                 <div class="col-sm-12">
                                     <div class="card-body text-center">
-                                        <h4 class="card-title text-white">
-                                            {{ $monitoring->parameter->name }}
-                                            {{ $monitoring->material->name }}
+                                        <h6 class="card-title text-white">
                                             {{ $monitoring->method }}
-                                        </h4>
+                                            {{ $monitoring->material->name }}
+                                        </h6>
+                                        <h6 class="card-title text-white">
+                                            {{ $monitoring->parameter->name }}
+                                        </h6>
                                         <br>
                                         <h2 class="mb-4 text-white">
                                             @if ($monitoring->data != null)

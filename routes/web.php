@@ -58,5 +58,6 @@ Route::resource('/report_type', ReportTypeController::class)->middleware(['auth'
 Route::get('/report/{report_type_id}', [ReportController::class, 'index'])->name('report.index')->middleware(['auth', 'check.permission']);
 Route::post('/report', [ReportController::class, 'filter'])->name('report.filter');
 Route::resource('/monitoring', MonitoringController::class)->middleware(['auth', 'check.permission']);
+Route::post('search_material', [MaterialController::class, 'search'])->name('material.search');
 
 
