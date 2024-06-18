@@ -41,6 +41,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>{{ ucwords(str_replace('_', ' ', 'time')) }}</th>
+                                                    <th>{{ ucwords(str_replace('_', ' ', 'batch')) }}</th>
                                                     @foreach ($material->material_parameter as $material_parameter)
                                                         <th>{{ ucwords(str_replace('_', ' ', $material_parameter->parameter->name)) }}<sub>({{ $material_parameter->parameter->measurement_unit->name }})</sub>
                                                         </th>
@@ -51,6 +52,7 @@
                                                 @foreach ($material->analysis as $analysis)
                                                     <tr>
                                                         <td>{{ date('H:i', strtotime($analysis->created_at)) }}</td>
+                                                        <td>{{ $analysis->batch }}</td>
                                                         @foreach ($material->material_parameter as $material_parameter)
                                                             <td>
                                                                 @if($material_parameter->parameter->type == "Numeric")

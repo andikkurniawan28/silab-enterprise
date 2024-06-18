@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('material_id')->constrained();
             $table->foreignId('customer_id')->constrained();
+            $table->string('batch')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

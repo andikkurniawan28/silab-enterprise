@@ -91,6 +91,7 @@ class AnalysisController extends Controller
         $validation_rules = [
             "material_id" => "required",
             "customer_id" => "required",
+            "batch" => "nullable",
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);
@@ -136,6 +137,7 @@ class AnalysisController extends Controller
         $validation_rules = [
             "material_id" => "required",
             "customer_id" => "required",
+            "batch" => "nullable",
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);

@@ -56,6 +56,15 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="batch">
+                                    {{ ucwords(str_replace('_', ' ', 'batch')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="batch" name="batch" value="{{ old("batch") }}">
+                                </div>
+                            </div>
+
                             @foreach ($parameters as $parameter)
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"

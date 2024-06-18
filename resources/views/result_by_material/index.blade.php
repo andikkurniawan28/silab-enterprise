@@ -22,9 +22,11 @@
                             <tr>
                                 <th>{{ ucwords(str_replace('_', ' ', 'id')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'timestamp')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'batch')) }}</th>
                                 @foreach ($material_parameters as $material_parameter)
                                     <th>{{ ucwords(str_replace('_', ' ', $material_parameter->parameter->name)) }}<sub>({{ $material_parameter->parameter->measurement_unit->name }})</sub></th>
                                 @endforeach
+                                <th>{{ ucwords(str_replace('_', ' ', 'customer')) }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -69,6 +71,12 @@
                         orderable: true,
                         searchable: true,
                     },
+                    {
+                        data: 'batch',
+                        name: 'batch',
+                        orderable: true,
+                        searchable: true,
+                    },
                     @foreach ($material_parameters as $material_parameter)
                         {
                             data: '{{ str_replace(' ', '_', $material_parameter->parameter->name) }}',
@@ -77,6 +85,12 @@
                             searchable: true,
                         },
                     @endforeach
+                    {
+                        data: 'customer_name',
+                        name: 'customer_name',
+                        orderable: true,
+                        searchable: true,
+                    },
                 ]
             });
 

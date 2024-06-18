@@ -31,7 +31,7 @@ class ResultByMaterialController extends Controller
 
         if ($request->ajax()) {
             // Filter data berdasarkan from_datetime dan to_datetime
-            $data = Analysis::with('material')
+            $data = Analysis::with('material', 'customer')
                 ->where('material_id', $material_id)
                 ->whereBetween('created_at', [$from_datetime, $to_datetime])
                 ->latest()
@@ -42,8 +42,10 @@ class ResultByMaterialController extends Controller
             foreach ($data as $row) {
                 $formatted_row = [
                     'id' => $row->id,
+                    'batch' => $row->batch,
                     'created_at' => $row->created_at->format('Y-m-d H:i:s'),
-                    'material_name' => $row->material->name
+                    'material_name' => $row->material->name,
+                    'customer_name' => $row->customer->name,
                 ];
 
                 // Menambahkan data material parameter sebagai kolom tersendiri
