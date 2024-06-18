@@ -107,19 +107,4 @@ class ReportController extends Controller
         // Mengembalikan tampilan laporan dengan data yang telah diproses.
         return view('report.index', compact('setup', 'report_type', 'materials', 'parameters'));
     }
-
-    /**
-     * Mengubah filter tanggal dan waktu, kemudian mengarahkan kembali ke halaman laporan.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function filter(Request $request)
-    {
-        // Mengubah nilai sesi untuk tanggal dan waktu berdasarkan input dari pengguna.
-        AuthController::changeDatetime($request);
-
-        // Mengarahkan kembali ke halaman laporan dengan jenis laporan yang dipilih.
-        return redirect()->route("report.index", $request->report_type);
-    }
 }

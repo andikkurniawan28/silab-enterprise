@@ -18,8 +18,12 @@ class AnalysisController extends Controller
     {
         $setup = Setup::init();
         $parameters = Parameter::all();
+        $from_datetime = session('from_datetime', now()->startOfDay()->format('Y-m-d 06:00:00'));
+        $to_datetime = session('to_datetime', now()->endOfDay()->addDay()->format('Y-m-d 06:00:00'));
         if ($request->ajax()) {
-            $data = Analysis::with('material')->latest()->get();
+            $data = Analysis::with('material')
+                ->whereBetween('created_at', [$from_datetime, $to_datetime])
+                ->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('material_id', function ($row) {

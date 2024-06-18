@@ -58,9 +58,9 @@ Route::get('/result_by_material_category/{material_category_id}', [ResultByMater
 Route::post('/result_by_material_category', [ResultByMaterialCategoryController::class, 'filter'])->name('result_by_material_category.filter');
 Route::resource('/report_type', ReportTypeController::class)->middleware(['auth', 'check.permission']);
 Route::get('/report/{report_type_id}', [ReportController::class, 'index'])->name('report.index')->middleware(['auth', 'check.permission']);
-Route::post('/report', [ReportController::class, 'filter'])->name('report.filter');
 Route::resource('/monitoring', MonitoringController::class)->middleware(['auth', 'check.permission']);
-// Untuk search
+
+// For search
 Route::post('search_material', [MaterialController::class, 'search'])->name('material.search');
 // Route::post('search_feature', FeatureSearchController::class)->name('feature.search');
 // Route::post('search', SearchController::class)->name('search');

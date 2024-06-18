@@ -14,8 +14,14 @@ class ActivityLogController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $from_datetime = session('from_datetime', now()->startOfDay()->format('Y-m-d 06:00:00'));
+        $to_datetime = session('to_datetime', now()->endOfDay()->addDay()->format('Y-m-d 06:00:00'));
         if ($request->ajax()) {
-            $data = ActivityLog::with('user')->latest()->get();
+
+            $data = ActivityLog::with('user')
+                ->whereBetween('created_at', [$from_datetime, $to_datetime])
+                ->latest()->get();
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('user_id', function($row) {
