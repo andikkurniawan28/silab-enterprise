@@ -57,6 +57,7 @@
 {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function() {
 
         @if (session('success'))
@@ -88,6 +89,7 @@
                 `,
             });
         @endif
+
     });
 </script>
 @yield('additional_script')

@@ -33,9 +33,8 @@
                                     {{ ucwords(str_replace('_', ' ', 'measurement_unit')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="measurement_unit_id" name="measurement_unit_id"
-                                        required autofocus>
-                                        <option disabled selected>Select a measurement unit :</option>
+                                    <select class="measurement_unit_id" id="measurement_unit_id" name="measurement_unit_id" required autofocus>
+                                        <option disabled selected>Select a {{ ucwords(str_replace('_', ' ', 'measurement_unit')) }} :</option>
                                         @foreach ($measurement_units as $measurement_unit)
                                             <option value="{{ $measurement_unit->id }}">@php echo ucwords(str_replace('_', ' ', $measurement_unit->name)); @endphp</option>
                                         @endforeach
@@ -209,5 +208,13 @@
                 optionSections[i].style.display = "none";
             }
         }
+
+        $(document).ready(function() {
+            $('.measurement_unit_id').select2({
+                theme: 'bootstrap',
+                width: '100%',
+            });
+        });
+
     </script>
 @endsection

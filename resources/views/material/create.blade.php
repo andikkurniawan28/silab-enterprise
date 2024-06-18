@@ -32,8 +32,8 @@
                                     {{ ucwords(str_replace('_', ' ', 'station')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="station_id" name="station_id" required autofocus>
-                                        <option disabled selected>Select a station :</option>
+                                    <select class="station_id" id="station_id" name="station_id" required autofocus>
+                                        <option disabled selected>Select a {{ ucwords(str_replace('_', ' ', 'station')) }} :</option>
                                         @foreach ($stations as $station)
                                             <option value="{{ $station->id }}">@php echo ucwords(str_replace('_', ' ', $station->name)); @endphp</option>
                                         @endforeach
@@ -46,8 +46,8 @@
                                     {{ ucwords(str_replace('_', ' ', 'material_category')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="material_category_id" name="material_category_id" required autofocus>
-                                        <option disabled selected>Select a material_category :</option>
+                                    <select class="material_category_id" id="material_category_id" name="material_category_id" required autofocus>
+                                        <option disabled selected>Select a {{ ucwords(str_replace('_', ' ', 'material_category')) }} :</option>
                                         @foreach ($material_categories as $material_category)
                                             <option value="{{ $material_category->id }}">@php echo ucwords(str_replace('_', ' ', $material_category->name)); @endphp</option>
                                         @endforeach
@@ -108,6 +108,18 @@
             let checkboxes = document.querySelectorAll('.parameter-checkbox');
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = this.checked;
+            });
+        });
+
+        $(document).ready(function() {
+            $('.station_id').select2({
+                theme: 'bootstrap',
+                width: '100%',
+            });
+
+            $('.material_category_id').select2({
+                theme: 'bootstrap',
+                width: '100%',
             });
         });
     </script>

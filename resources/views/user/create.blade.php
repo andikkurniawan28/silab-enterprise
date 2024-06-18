@@ -31,10 +31,10 @@
                                     {{ ucwords(str_replace('_', ' ', 'role')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="role_id" name="role_id" required autofocus>
+                                    <select class="role_id" id="role_id" name="role_id" required autofocus>
                                         <option disabled selected>Select a role :</option>
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ ucwords(str_replace('_', ' ', $role->name)) }}</option>
+                                            <option value="{{ $role->id }}">@php echo ucwords(str_replace('_', ' ', $role->name)); @endphp</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -74,4 +74,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('additional_script')
+<script>
+    $(document).ready(function() {
+        $('.role_id').select2({
+            theme: 'bootstrap',
+            width: '100%',
+        });
+    });
+</script>
 @endsection
