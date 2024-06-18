@@ -165,6 +165,37 @@
             </li>
         @endif
 
+        @if (in_array('company.index', $permissions) ||
+            in_array('customer.index', $permissions))
+            <li class="menu-item
+                @yield('company-active')
+                @yield('customer-active')
+            ">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-smile"></i>
+                    <div data-i18n="Analytics">{{ ucwords(str_replace('_', ' ', 'client')) }}</div>
+                </a>
+                <ul class="menu-sub">
+                    @if (in_array('company.index', $permissions))
+                        <li class="menu-item @yield('company-active')">
+                            <a href="{{ route('company.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'company')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array('customer.index', $permissions))
+                        <li class="menu-item @yield('customer-active')">
+                            <a href="{{ route('customer.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">{{ ucwords(str_replace('_', ' ', 'customer')) }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
         @if (in_array('analysis.index', $permissions) ||
             in_array('monitoring.index', $permissions))
             <li class="menu-item

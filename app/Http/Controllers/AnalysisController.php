@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Setup;
 use App\Models\Analysis;
-use Illuminate\Http\Request;
+use App\Models\Customer;
 use App\Models\Material;
 use App\Models\Parameter;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class AnalysisController extends Controller
@@ -21,13 +22,16 @@ class AnalysisController extends Controller
         $from_datetime = session('from_datetime', now()->startOfDay()->format('Y-m-d 06:00:00'));
         $to_datetime = session('to_datetime', now()->endOfDay()->addDay()->format('Y-m-d 06:00:00'));
         if ($request->ajax()) {
-            $data = Analysis::with('material')
+            $data = Analysis::with('material', 'customer')
                 ->whereBetween('created_at', [$from_datetime, $to_datetime])
                 ->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('material_id', function ($row) {
                     return $row->material ? '<a href="' . route('result_by_material.index', $row->material_id) . '" target="_blank">' . $row->material->name . '</a>' : 'N/A';
+                })
+                ->editColumn('customer_id', function ($row) {
+                    return $row->customer ? $row->customer->name : 'N/A';
                 })
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->format('Y-m-d H:i:s');
@@ -57,7 +61,7 @@ class AnalysisController extends Controller
                     </div>
                 ';
                 })
-                ->rawColumns(['parameters', 'action', 'material_id'])
+                ->rawColumns(['parameters', 'action', 'material_id', 'customer_id'])
                 ->setRowAttr([
                     'data-searchable' => 'true'
                 ])
@@ -74,7 +78,8 @@ class AnalysisController extends Controller
         $setup = Setup::init();
         $materials = Material::all();
         $parameters = Parameter::all();
-        return view('analysis.create', compact('setup', 'materials', 'parameters'));
+        $customers = Customer::all();
+        return view('analysis.create', compact('setup', 'materials', 'parameters', 'customers'));
     }
 
     /**
@@ -85,6 +90,7 @@ class AnalysisController extends Controller
         $parameters = Parameter::all();
         $validation_rules = [
             "material_id" => "required",
+            "customer_id" => "required",
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);
@@ -116,7 +122,8 @@ class AnalysisController extends Controller
         $analysis = Analysis::findOrFail($id);
         $materials = Material::all();
         $parameters = Parameter::all();
-        return view('analysis.edit', compact('setup', 'analysis', 'materials', 'parameters'));
+        $customers = Customer::all();
+        return view('analysis.edit', compact('setup', 'analysis', 'materials', 'parameters', 'customers'));
     }
 
     /**
@@ -128,6 +135,7 @@ class AnalysisController extends Controller
         $parameters = Parameter::all();
         $validation_rules = [
             "material_id" => "required",
+            "customer_id" => "required",
         ];
         foreach ($parameters as $parameter) {
             $parameter_name = str_replace(' ', '_', $parameter->name);

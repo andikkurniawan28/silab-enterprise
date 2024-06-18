@@ -27,6 +27,7 @@
                     <div class="card-body">
                         <form action="{{ route('analysis.store') }}" method="POST">
                             @csrf @method('POST')
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="material_id">
                                     {{ ucwords(str_replace('_', ' ', 'material')) }}
@@ -40,6 +41,21 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="customer_id">
+                                    {{ ucwords(str_replace('_', ' ', 'customer')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <select class="customer_id" id="customer_id" name="customer_id" required autofocus>
+                                        <option disabled selected>Select a customer :</option>
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}">@php echo ucwords(str_replace('_', ' ', $customer->name)); @endphp</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             @foreach ($parameters as $parameter)
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"
@@ -86,6 +102,10 @@
 <script>
     $(document).ready(function() {
         $('.material_id').select2({
+            theme: 'bootstrap',
+            width: '100%',
+        });
+        $('.customer_id').select2({
             theme: 'bootstrap',
             width: '100%',
         });
