@@ -65,12 +65,18 @@
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const deleteButtons = document.querySelectorAll('.delete-btn');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
+            // Inisialisasi DataTable
+            const table = $('#example').DataTable();
+            console.log('DataTable initialized');
+
+            // Delegasi event untuk tombol delete
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
                     event.preventDefault();
-                    const parameter_id = this.getAttribute('data-id');
-                    const parameter_name = this.getAttribute('data-name');
+                    console.log('Delete button clicked');
+                    const button = event.target;
+                    const parameter_id = button.getAttribute('data-id');
+                    const parameter_name = button.getAttribute('data-name');
                     Swal.fire({
                         title: 'Are you sure?',
                         text: 'You won\'t be able to revert this!',
@@ -110,7 +116,7 @@
                             form.submit();
                         }
                     });
-                });
+                }
             });
         });
     </script>

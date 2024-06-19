@@ -22,7 +22,8 @@
                     <table class="table table-bordered table-hovered" id="customer_table" width="100%">
                         <thead>
                             <tr>
-                                <th>{{ ucwords(str_replace('_', ' ', 'name')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'id')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'timestamp')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'company')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'manage')) }}</th>
                             </tr>
@@ -50,10 +51,24 @@
                 order: [
                     [0, 'desc']
                 ],
-                columns: [
-                    { data: 'name', name: 'name' },
-                    { data: 'company_id', name: 'company.name' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'company_id',
+                        name: 'company.name'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
                 ],
                 initComplete: function(settings, json) {
                     var api = this.api();
@@ -61,48 +76,63 @@
                     // Optional: Custom header processing if needed
                 }
             });
+        });
 
-            // Delete button handling
-            $('#customer_table').on('click', '.delete-btn', function() {
-                var customer_id = $(this).data('id');
-                var customer_name = $(this).data('name');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You won\'t be able to revert this!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var form = document.createElement('form');
-                        form.setAttribute('method', 'POST');
-                        form.setAttribute('action', `{{ route('customer.destroy', ':id') }}`.replace(':id', customer_id));
-                        var csrfToken = document.getElementsByName("_token")[0].value;
+        // Delete button handling
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inisialisasi DataTable
+            const table = $('#example').DataTable();
+            console.log('DataTable initialized');
 
-                        var hiddenMethod = document.createElement('input');
-                        hiddenMethod.setAttribute('type', 'hidden');
-                        hiddenMethod.setAttribute('name', '_method');
-                        hiddenMethod.setAttribute('value', 'DELETE');
+            // Delegasi event untuk tombol delete
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    event.preventDefault();
+                    console.log('Delete button clicked');
+                    const button = event.target;
+                    const customer_id = button.getAttribute('data-id');
+                    const customer_name = button.getAttribute('data-name');
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const form = document.createElement('form');
+                            form.setAttribute('method', 'POST');
+                            form.setAttribute('action',
+                                `{{ route('customer.destroy', ':id') }}`.replace(
+                                    ':id', customer_id));
+                            const csrfToken = document.getElementsByName("_token")[0]
+                                .value;
 
-                        var name = document.createElement('input');
-                        name.setAttribute('type', 'hidden');
-                        name.setAttribute('name', 'name');
-                        name.setAttribute('value', customer_name);
+                            const hiddenMethod = document.createElement('input');
+                            hiddenMethod.setAttribute('type', 'hidden');
+                            hiddenMethod.setAttribute('name', '_method');
+                            hiddenMethod.setAttribute('value', 'DELETE');
 
-                        var csrfTokenInput = document.createElement('input');
-                        csrfTokenInput.setAttribute('type', 'hidden');
-                        csrfTokenInput.setAttribute('name', '_token');
-                        csrfTokenInput.setAttribute('value', csrfToken);
+                            const name = document.createElement('input');
+                            name.setAttribute('type', 'hidden');
+                            name.setAttribute('name', 'name');
+                            name.setAttribute('value', customer_name);
 
-                        form.appendChild(hiddenMethod);
-                        form.appendChild(name);
-                        form.appendChild(csrfTokenInput);
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                });
+                            const csrfTokenInput = document.createElement('input');
+                            csrfTokenInput.setAttribute('type', 'hidden');
+                            csrfTokenInput.setAttribute('name', '_token');
+                            csrfTokenInput.setAttribute('value', csrfToken);
+
+                            form.appendChild(hiddenMethod);
+                            form.appendChild(name);
+                            form.appendChild(csrfTokenInput);
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    });
+                }
             });
         });
     </script>

@@ -1,10 +1,10 @@
 @extends('template.sneat.master')
 
 @section('title')
-    {{ ucwords(str_replace('_', ' ', 'edit_customer')) }}
+    {{ ucwords(str_replace('_', ' ', 'edit_monitoring')) }}
 @endsection
 
-@section('customer-active')
+@section('monitoring-active')
     {{ 'active' }}
 @endsection
 
@@ -14,7 +14,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('customer.index') }}">{{ ucwords(str_replace('_', ' ', 'customer')) }}</a></li>
+                        href="{{ route('monitoring.index') }}">{{ ucwords(str_replace('_', ' ', 'monitoring')) }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
             </ol>
         </nav>
@@ -25,30 +25,55 @@
                         <h5 class="mb-0">@yield('title')</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('customer.update', $customer->id) }}" method="POST">
+                        <form action="{{ route('monitoring.update', $monitoring->id) }}" method="POST">
                             @csrf @method('PUT')
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="name">
-                                    {{ ucwords(str_replace('_', ' ', 'name')) }}
+                                <label class="col-sm-2 col-form-label" for="material_id">
+                                    {{ ucwords(str_replace('_', ' ', 'material')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $customer->name }}" required>
+                                    <select class="material_id" id="material_id" name="material_id" required autofocus>
+                                        <option disabled>Select a material :</option>
+                                        @foreach ($materials as $material)
+                                            <option value="{{ $material->id }}" {{ $monitoring->material_id == $material->id ? 'selected' : '' }}>
+                                                @php echo ucwords(str_replace('_', ' ', $material->name)); @endphp
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="company_id">
-                                    {{ ucwords(str_replace('_', ' ', 'company')) }}
+                                <label class="col-sm-2 col-form-label" for="parameter_id">
+                                    {{ ucwords(str_replace('_', ' ', 'parameter')) }}
                                 </label>
                                 <div class="col-sm-10">
-                                    <select class="company_id" id="company_id" name="company_id" required>
-                                        <option disabled>Select a company :</option>
-                                        @foreach ($companys as $company)
-                                            <option value="{{ $company->id }}" {{ $customer->company_id == $company->id ? 'selected' : '' }}>
-                                                @php echo ucwords(str_replace('_', ' ', $company->name)); @endphp
+                                    <select class="parameter_id" id="parameter_id" name="parameter_id" required>
+                                        <option disabled>Select a parameter :</option>
+                                        @foreach ($parameters as $parameter)
+                                            <option value="{{ $parameter->id }}" {{ $monitoring->parameter_id == $parameter->id ? 'selected' : '' }}>
+                                                @php echo ucwords(str_replace('_', ' ', $parameter->name)); @endphp
                                             </option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="method">
+                                    {{ ucwords(str_replace('_', ' ', 'method')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <select class="method" id="method" name="method" required>
+                                        <option disabled>Select a method :</option>
+                                        <option {{ $monitoring->method == 'Latest' ? 'selected' : '' }}>Latest</option>
+                                        <option {{ $monitoring->method == 'Average' ? 'selected' : '' }}>Average</option>
+                                        <option {{ $monitoring->method == 'Minimum' ? 'selected' : '' }}>Minimum</option>
+                                        <option {{ $monitoring->method == 'Maximum' ? 'selected' : '' }}>Maximum</option>
+                                        <option {{ $monitoring->method == 'Summary' ? 'selected' : '' }}>Summary</option>
+                                        <option {{ $monitoring->method == 'Count' ? 'selected' : '' }}>Count</option>
+                                        <option {{ $monitoring->method == 'Trendline' ? 'selected' : '' }}>Trendline</option>
                                     </select>
                                 </div>
                             </div>
@@ -70,7 +95,15 @@
 @section('additional_script')
 <script>
     $(document).ready(function() {
-        $('.company_id').select2({
+        $('.material_id').select2({
+            theme: 'bootstrap',
+            width: '100%',
+        });
+        $('.parameter_id').select2({
+            theme: 'bootstrap',
+            width: '100%',
+        });
+        $('.method').select2({
             theme: 'bootstrap',
             width: '100%',
         });

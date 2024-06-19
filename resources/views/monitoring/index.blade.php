@@ -67,48 +67,63 @@
                     // Optional: Custom header processing if needed
                 }
             });
+        });
 
-            // Delete button handling
-            $('#monitoring_table').on('click', '.delete-btn', function() {
-                var monitoring_id = $(this).data('id');
-                var monitoring_name = $(this).data('name');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You won\'t be able to revert this!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var form = document.createElement('form');
-                        form.setAttribute('method', 'POST');
-                        form.setAttribute('action', `{{ route('monitoring.destroy', ':id') }}`.replace(':id', monitoring_id));
-                        var csrfToken = document.getElementsByName("_token")[0].value;
+        // Delete button handling
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inisialisasi DataTable
+            const table = $('#example').DataTable();
+            console.log('DataTable initialized');
 
-                        var hiddenMethod = document.createElement('input');
-                        hiddenMethod.setAttribute('type', 'hidden');
-                        hiddenMethod.setAttribute('name', '_method');
-                        hiddenMethod.setAttribute('value', 'DELETE');
+            // Delegasi event untuk tombol delete
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    event.preventDefault();
+                    console.log('Delete button clicked');
+                    const button = event.target;
+                    const monitoring_id = button.getAttribute('data-id');
+                    const monitoring_name = button.getAttribute('data-name');
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const form = document.createElement('form');
+                            form.setAttribute('method', 'POST');
+                            form.setAttribute('action',
+                                `{{ route('monitoring.destroy', ':id') }}`.replace(
+                                    ':id', monitoring_id));
+                            const csrfToken = document.getElementsByName("_token")[0]
+                                .value;
 
-                        var name = document.createElement('input');
-                        name.setAttribute('type', 'hidden');
-                        name.setAttribute('name', 'name');
-                        name.setAttribute('value', monitoring_name);
+                            const hiddenMethod = document.createElement('input');
+                            hiddenMethod.setAttribute('type', 'hidden');
+                            hiddenMethod.setAttribute('name', '_method');
+                            hiddenMethod.setAttribute('value', 'DELETE');
 
-                        var csrfTokenInput = document.createElement('input');
-                        csrfTokenInput.setAttribute('type', 'hidden');
-                        csrfTokenInput.setAttribute('name', '_token');
-                        csrfTokenInput.setAttribute('value', csrfToken);
+                            const name = document.createElement('input');
+                            name.setAttribute('type', 'hidden');
+                            name.setAttribute('name', 'name');
+                            name.setAttribute('value', monitoring_name);
 
-                        form.appendChild(hiddenMethod);
-                        form.appendChild(name);
-                        form.appendChild(csrfTokenInput);
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                });
+                            const csrfTokenInput = document.createElement('input');
+                            csrfTokenInput.setAttribute('type', 'hidden');
+                            csrfTokenInput.setAttribute('name', '_token');
+                            csrfTokenInput.setAttribute('value', csrfToken);
+
+                            form.appendChild(hiddenMethod);
+                            form.appendChild(name);
+                            form.appendChild(csrfTokenInput);
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    });
+                }
             });
         });
     </script>

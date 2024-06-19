@@ -25,7 +25,7 @@
                                 <th>{{ ucwords(str_replace('_', ' ', 'id')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'timestamp')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'material')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'customer')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'customer_id')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'batch')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'analyses')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'manage')) }}</th>
@@ -69,48 +69,63 @@
                     // Optional: Custom header processing if needed
                 }
             });
+        });
 
-            // Delete button handling
-            $('#analysis_table').on('click', '.delete-btn', function() {
-                var analysis_id = $(this).data('id');
-                var analysis_name = $(this).data('name');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You won\'t be able to revert this!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var form = document.createElement('form');
-                        form.setAttribute('method', 'POST');
-                        form.setAttribute('action', `{{ route('analysis.destroy', ':id') }}`.replace(':id', analysis_id));
-                        var csrfToken = document.getElementsByName("_token")[0].value;
+        // Delete button handling
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inisialisasi DataTable
+            const table = $('#example').DataTable();
+            console.log('DataTable initialized');
 
-                        var hiddenMethod = document.createElement('input');
-                        hiddenMethod.setAttribute('type', 'hidden');
-                        hiddenMethod.setAttribute('name', '_method');
-                        hiddenMethod.setAttribute('value', 'DELETE');
+            // Delegasi event untuk tombol delete
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    event.preventDefault();
+                    console.log('Delete button clicked');
+                    const button = event.target;
+                    const analysis_id = button.getAttribute('data-id');
+                    const analysis_name = button.getAttribute('data-name');
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const form = document.createElement('form');
+                            form.setAttribute('method', 'POST');
+                            form.setAttribute('action',
+                                `{{ route('analysis.destroy', ':id') }}`.replace(
+                                    ':id', analysis_id));
+                            const csrfToken = document.getElementsByName("_token")[0]
+                                .value;
 
-                        var name = document.createElement('input');
-                        name.setAttribute('type', 'hidden');
-                        name.setAttribute('name', 'name');
-                        name.setAttribute('value', analysis_name);
+                            const hiddenMethod = document.createElement('input');
+                            hiddenMethod.setAttribute('type', 'hidden');
+                            hiddenMethod.setAttribute('name', '_method');
+                            hiddenMethod.setAttribute('value', 'DELETE');
 
-                        var csrfTokenInput = document.createElement('input');
-                        csrfTokenInput.setAttribute('type', 'hidden');
-                        csrfTokenInput.setAttribute('name', '_token');
-                        csrfTokenInput.setAttribute('value', csrfToken);
+                            const name = document.createElement('input');
+                            name.setAttribute('type', 'hidden');
+                            name.setAttribute('name', 'name');
+                            name.setAttribute('value', analysis_name);
 
-                        form.appendChild(hiddenMethod);
-                        form.appendChild(name);
-                        form.appendChild(csrfTokenInput);
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                });
+                            const csrfTokenInput = document.createElement('input');
+                            csrfTokenInput.setAttribute('type', 'hidden');
+                            csrfTokenInput.setAttribute('name', '_token');
+                            csrfTokenInput.setAttribute('value', csrfToken);
+
+                            form.appendChild(hiddenMethod);
+                            form.appendChild(name);
+                            form.appendChild(csrfTokenInput);
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    });
+                }
             });
         });
     </script>
